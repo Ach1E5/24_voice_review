@@ -232,3 +232,42 @@ input[type="text"]:focus, select:focus {
 .card-fade-in {
   animation: fadeIn 0.4s ease-out forwards;
 }
+
+/* カード内のボタンエリア */
+.card-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.review-btn, .buy-btn-card {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.review-btn {
+  background-color: var(--main-color);
+  color: white;
+  box-shadow: 0 4px 10px rgba(255, 183, 197, 0.4);
+}
+
+.review-btn:hover {
+  background-color: var(--accent-color);
+}
+
+.buy-btn-card {
+  background-color: #fff0f3;
+  color: #ff4d6d;
+  border: 1px solid #ffccd5;
+}
+
+.buy-btn-card:hover {
+  background-color: #ffe3e8;
+}

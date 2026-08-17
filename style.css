@@ -33,31 +33,52 @@ header h1 {
   padding: 0 15px;
 }
 
-/* フィルター */
+/* フィルターエリア（縦にゆったり並べる） */
 .filter-section {
   background: var(--card-bg);
-  padding: 15px;
-  border-radius: 15px;
+  padding: 24px;
+  border-radius: 24px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 20px rgba(255, 183, 197, 0.2);
+  border: 2px solid #ffe3e8;
 }
 
 .filter-group {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 6px;
 }
 
-select {
-  padding: 8px 12px;
-  border-radius: 20px;
-  border: 2px solid var(--main-color);
+.filter-group label {
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: var(--accent-color);
+  margin-left: 8px;
+}
+
+/* 検索窓とセレクトボックスを大きく・ぷっくり角丸に */
+input[type="text"], select {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: 2px solid #ffccd5;
   outline: none;
-  background: white;
+  background: #fff;
   font-family: inherit;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* 入力欄にフォーカスした時のアニメーション */
+input[type="text"]:focus, select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 8px rgba(255, 111, 145, 0.3);
+  background-color: #fff9fa;
 }
 
 /* カード一覧 */
@@ -69,7 +90,7 @@ select {
 
 .card {
   background: var(--card-bg);
-  border-radius: 16px;
+  border-radius: 20px;
   padding: 20px;
   box-shadow: 0 6px 15px rgba(0,0,0,0.05);
   transition: transform 0.2s, box-shadow 0.2s;
@@ -93,7 +114,7 @@ select {
 
 .status-badge {
   font-size: 0.75rem;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: 12px;
   font-weight: bold;
 }
@@ -127,24 +148,26 @@ select {
 }
 
 .tag {
-  background: #f0f0f0;
+  background: #fff0f3;
+  color: #ff4d6d;
   font-size: 0.75rem;
-  padding: 3px 8px;
-  border-radius: 10px;
-  color: #666;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: bold;
 }
 
 .review-btn {
   background-color: var(--main-color);
   color: white;
   border: none;
-  padding: 10px;
-  border-radius: 20px;
+  padding: 12px;
+  border-radius: 25px;
   cursor: pointer;
   font-weight: bold;
   font-family: inherit;
   margin-top: 10px;
   transition: background 0.2s;
+  box-shadow: 0 4px 10px rgba(255, 183, 197, 0.4);
 }
 
 .review-btn:hover {
@@ -165,12 +188,13 @@ select {
 .modal-content {
   background: white;
   padding: 30px;
-  border-radius: 20px;
+  border-radius: 24px;
   max-width: 500px;
   width: 90%;
   position: relative;
   max-height: 80vh;
   overflow-y: auto;
+  border: 2px solid #ffe3e8;
 }
 
 .close-btn {
@@ -178,15 +202,22 @@ select {
   top: 15px; right: 20px;
   font-size: 1.5rem;
   cursor: pointer;
+  color: #aaa;
+}
+
+.modal-text {
+  line-height: 1.6;
+  white-space: pre-wrap;
 }
 
 .buy-btn {
   display: inline-block;
   background: #ff4d6d;
   color: white;
-  padding: 10px 20px;
+  padding: 10px 22px;
   border-radius: 20px;
   text-decoration: none;
   font-weight: bold;
   margin-top: 15px;
+  box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
 }

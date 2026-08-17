@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>にじさんじボイス感想まとめ</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <h1>🌸 にじさんじボイス感想データベース 🌸</h1>
+  </header>
+
+  <main class="container">
+    <!-- 絞り込みフィルターエリア -->
+    <section class="filter-section">
+      <div class="filter-group">
+        <label>ライバー：</label>
+        <select id="filter-liver">
+          <option value="all">全員</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>販売状況：</label>
+        <select id="filter-status">
+          <option value="all">すべて</option>
+          <option value="常設販売中">常設販売中</option>
+          <option value="期間終了">期間終了</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>ジャンル：</label>
+        <select id="filter-tag">
+          <option value="all">すべて</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- ボイスカード一覧エリア -->
+    <div id="card-list" class="card-grid"></div>
+  </main>
+
+  <!-- 感想ポップアップ（モーダル） -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="close-modal">&times;</span>
+      <h2 id="modal-title"></h2>
+      <p id="modal-liver" class="modal-liver-name"></p>
+      <div id="modal-body" class="modal-text"></div>
+      <div class="modal-footer">
+        <a id="modal-link" href="#" target="_blank" rel="noopener" class="buy-btn">公式販売ページへ</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

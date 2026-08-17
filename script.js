@@ -1,4 +1,4 @@
-// ★ ここにボイスのデータを追加・編集していってね！
+// ★ ここにデータ追加・編集
 const voiceData = [
   {
     id: 1,
@@ -7,8 +7,8 @@ const voiceData = [
     status: "常設販売中",
     sweetness: "♥♥♥♥♡", // ハートの数で表現
     tags: ["シチュエーション", "手紙"],
-    review: "ここに感想本文が入ります！距離感が近くて最高でした...",
-    url: "https://shop.nijisanji.jp/"
+    review: "感想本文",
+    url: "https://"
   },
   {
     id: 2,
@@ -17,8 +17,8 @@ const voiceData = [
     status: "期間終了",
     sweetness: "♥♥♡♡♡",
     tags: ["ASMR", "学パロ"],
-    review: "わちゃわちゃ系で楽しかった！",
-    url: "https://shop.nijisanji.jp/"
+    review: "〇〇",
+    url: "https:///"
   }
 ];
 

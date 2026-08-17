@@ -54,27 +54,27 @@ function renderCards(data) {
 }
 
 function initFilters() {
-  const liverSelect = document.getElementById('filter-liver');
-  const tagSelect = document.getElementById('filter-tag');
-
-  const livers = [...new Set(voiceData.map(d => d.liver))];
-  const tags = [...new Set(voiceData.flatMap(d => d.tags))];
-
-  livers.forEach(l => liverSelect.innerHTML += `<option value="${l}">${l}</option>`);
-  tags.forEach(t => tagSelect.innerHTML += `<option value="${t}">${t}</option>`);
-
-  document.querySelectorAll('select').forEach(s => s.addEventListener('change', filterData));
+  // 文字入力や選択が変わった時にリアルタイムで絞り込むイベントを追加
+  document.getElementById('search-liver').addEventListener('input', filterData);
+  document.getElementById('search-tag').addEventListener('input', filterData);
+  document.getElementById('filter-status').addEventListener('change', filterData);
 }
 
 function filterData() {
-  const liver = document.getElementById('filter-liver').value;
+  const liverQuery = document.getElementById('search-liver').value.trim().toLowerCase();
+  const tagQuery = document.getElementById('search-tag').value.trim().toLowerCase();
   const status = document.getElementById('filter-status').value;
-  const tag = document.getElementById('filter-tag').value;
 
   const filtered = voiceData.filter(item => {
-    const matchLiver = liver === 'all' || item.liver === liver;
+    // ライバー名の部分一致チェック
+    const matchLiver = liverQuery === '' || item.liver.toLowerCase().includes(liverQuery);
+    
+    // 販売状況のチェック
     const matchStatus = status === 'all' || item.status === status;
-    const matchTag = tag === 'all' || item.tags.includes(tag);
+    
+    // ジャンル（タグ）の部分一致チェック
+    const matchTag = tagQuery === '' || item.tags.some(t => t.toLowerCase().includes(tagQuery));
+
     return matchLiver && matchStatus && matchTag;
   });
 

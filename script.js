@@ -22,20 +22,86 @@ const voiceData = [
   }
 ];
 
-// 画面読み込み時の処理
-document.addEventListener('DOMContentLoaded', () => {
-  renderCards(voiceData);
-  initFilters();
-});
+let currentSelectedTag = '';
 
-// タグをクリックしたときに検索欄にセットして絞り込む関数
+// 初期化処理
+function init() {
+  populateTagDropdown();
+  initFilters();
+  renderCards(voiceData);
+}
+
+// データ内のタグを重複なく集めてプルダウンの選択肢を作る関数
+function populateTagDropdown() {
+  const tagSelect = document.getElementById('select-tag');
+  if (!tagSelect) return;
+
+  const allTags = new Set();
+  voiceData.forEach(item => {
+    if (item.tags) {
+      item.tags.forEach(t => allTags.add(t));
+    }
+  });
+
+  allTags.forEach(tag => {
+    const option = document.createElement('option');
+    option.value = tag;
+    option.textContent = `#${tag}`;
+    tagSelect.appendChild(option);
+  });
+}
+
+function initFilters() {
+  document.getElementById('search-liver').addEventListener('input', filterData);
+  document.getElementById('search-tag').addEventListener('input', filterData);
+  document.getElementById('filter-status').addEventListener('change', filterData);
+  document.getElementById('select-tag').addEventListener('change', (e) => {
+    currentSelectedTag = e.target.value;
+    filterData();
+  });
+}
+
+// カード内のタグをクリックした時の処理
 function filterByTag(tagName) {
-  const searchInput = document.getElementById('search-input');
-  if (searchInput) {
-    searchInput.value = tagName;
-    // 既存の絞り込み処理を呼び出すイベントを発行
-    searchInput.dispatchEvent(new Event('input'));
+  currentSelectedTag = tagName;
+  const tagSelect = document.getElementById('select-tag');
+  if (tagSelect) tagSelect.value = tagName;
+  filterData();
+}
+
+// 選択中タグを解除する関数
+function clearTagFilter() {
+  currentSelectedTag = '';
+  const tagSelect = document.getElementById('select-tag');
+  if (tagSelect) tagSelect.value = '';
+  filterData();
+}
+
+function filterData() {
+  const liverQuery = document.getElementById('search-liver').value.trim().toLowerCase();
+  const tagQuery = document.getElementById('search-tag').value.trim().toLowerCase();
+  const status = document.getElementById('filter-status').value;
+
+  // バッジの表示切り替え
+  const badgeContainer = document.getElementById('active-tag-badge');
+  const badgeName = document.getElementById('active-tag-name');
+  if (currentSelectedTag) {
+    badgeName.textContent = `#${currentSelectedTag}`;
+    badgeContainer.style.display = 'flex';
+  } else {
+    badgeContainer.style.display = 'none';
   }
+
+  const filtered = voiceData.filter(item => {
+    const matchLiver = liverQuery === '' || item.liver.toLowerCase().includes(liverQuery);
+    const matchStatus = status === 'all' || item.status === status;
+    const matchTagInput = tagQuery === '' || item.tags.some(t => t.toLowerCase().includes(tagQuery));
+    const matchTagSelect = currentSelectedTag === '' || item.tags.includes(currentSelectedTag);
+
+    return matchLiver && matchStatus && matchTagInput && matchTagSelect;
+  });
+
+  renderCards(filtered);
 }
 
 function renderCards(data) {
@@ -47,7 +113,6 @@ function renderCards(data) {
     card.className = 'card card-fade-in';
     card.style.animationDelay = `${index * 0.05}s`;
 
-    // リンクが存在するかチェック（空文字や未設定の場合はdisabledにする）
     const hasReview = item.review && item.review.trim() !== "";
     const hasUrl = item.url && item.url.trim() !== "";
 
@@ -64,59 +129,19 @@ function renderCards(data) {
         </div>
         <h3 class="card-title">${item.title}</h3>
         <div class="liver-name">👤 ${item.liver}</div>
-        <div class="sweetness"> ${item.sweetness}</div>
+        <div class="sweetness">糖度: ${item.sweetness}</div>
         <div class="tags">
-          ${item.tags.map(t => `<span class="tag">#${t}</span>`).join('')}
+          ${item.tags.map(t => `<span class="tag" onclick="filterByTag('${t}')">#${t}</span>`).join('')}
         </div>
       </div>
       <div class="card-buttons">
-        <a ${reviewAttr} class="${reviewClass}">感想</a>
-        <a ${urlAttr} class="${urlClass}">販売ページ</a>
+        <a ${reviewAttr} class="${reviewClass}">感想を読む</a>
+        <a ${urlAttr} class="${urlClass}">公式販売ページ</a>
       </div>
     `;
     list.appendChild(card);
   });
 }
 
-function initFilters() {
-  // 文字入力や選択が変わった時にリアルタイムで絞り込むイベントを追加
-  document.getElementById('search-liver').addEventListener('input', filterData);
-  document.getElementById('search-tag').addEventListener('input', filterData);
-  document.getElementById('filter-status').addEventListener('change', filterData);
-}
-
-function filterData() {
-  const liverQuery = document.getElementById('search-liver').value.trim().toLowerCase();
-  const tagQuery = document.getElementById('search-tag').value.trim().toLowerCase();
-  const status = document.getElementById('filter-status').value;
-
-  const filtered = voiceData.filter(item => {
-    // ライバー名の部分一致チェック
-    const matchLiver = liverQuery === '' || item.liver.toLowerCase().includes(liverQuery);
-    
-    // 販売状況のチェック
-    const matchStatus = status === 'all' || item.status === status;
-    
-    // ジャンル（タグ）の部分一致チェック
-    const matchTag = tagQuery === '' || item.tags.some(t => t.toLowerCase().includes(tagQuery));
-
-    return matchLiver && matchStatus && matchTag;
-  });
-
-  renderCards(filtered);
-}
-
-function openModal(id) {
-  const item = voiceData.find(d => d.id === id);
-  if (!item) return;
-
-  document.getElementById('modal-title').innerText = item.title;
-  document.getElementById('modal-liver').innerText = `ライバー: ${item.liver}`;
-  document.getElementById('modal-body').innerText = item.review;
-  document.getElementById('modal-link').href = item.url;
-  document.getElementById('modal').style.display = 'flex';
-}
-
-document.getElementById('close-modal').addEventListener('click', () => {
-  document.getElementById('modal').style.display = 'none';
-});
+// ページ読み込み時に実行
+document.addEventListener('DOMContentLoaded', init);

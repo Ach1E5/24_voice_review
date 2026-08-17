@@ -18,7 +18,7 @@ const voiceData = [
     sweetness: "♥♥♡♡♡",
     tags: ["ASMR", "学パロ"],
     review: "〇〇",
-    url: "https:///"
+    url: ""
   }
 ];
 

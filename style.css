@@ -271,3 +271,49 @@ input[type="text"]:focus, select:focus {
 .buy-btn-card:hover {
   background-color: #ffe3e8;
 }
+
+/* カード内のボタンエリア */
+.card-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* ボタン共通デザイン */
+.review-btn, .buy-btn-card {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 0.95rem;
+  text-align: center;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+/* 上のボタン：感想を読む（ピンク） */
+.review-btn {
+  background-color: #ff9ebb;
+  color: white;
+  box-shadow: 0 4px 10px rgba(255, 158, 187, 0.4);
+}
+
+.review-btn:hover {
+  background-color: #ff85a6;
+  transform: translateY(-2px);
+}
+
+/* 下のボタン：公式販売ページ（むらさき） */
+.buy-btn-card {
+  background-color: #9d94e8;
+  color: white;
+  box-shadow: 0 4px 10px rgba(157, 148, 232, 0.4);
+}
+
+.buy-btn-card:hover {
+  background-color: #887ce0;
+  transform: translateY(-2px);
+}

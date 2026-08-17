@@ -54,14 +54,14 @@ function renderCards(data) {
         </div>
         <h3 class="card-title">${item.title}</h3>
         <div class="liver-name">👤 ${item.liver}</div>
-        <div class="sweetness">糖度: ${item.sweetness}</div>
+        <div class="sweetness"> ${item.sweetness}</div>
         <div class="tags">
           ${item.tags.map(t => `<span class="tag">#${t}</span>`).join('')}
         </div>
       </div>
       <div class="card-buttons">
-        <a ${reviewAttr} class="${reviewClass}">感想を読む</a>
-        <a ${urlAttr} class="${urlClass}">公式販売ページ</a>
+        <a ${reviewAttr} class="${reviewClass}">感想</a>
+        <a ${urlAttr} class="${urlClass}">販売ページ</a>
       </div>
     `;
     list.appendChild(card);

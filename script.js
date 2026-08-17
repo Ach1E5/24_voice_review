@@ -28,6 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
   initFilters();
 });
 
+// タグをクリックしたときに検索欄にセットして絞り込む関数
+function filterByTag(tagName) {
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    searchInput.value = tagName;
+    // 既存の絞り込み処理を呼び出すイベントを発行
+    searchInput.dispatchEvent(new Event('input'));
+  }
+}
+
 function renderCards(data) {
   const list = document.getElementById('card-list');
   list.innerHTML = '';

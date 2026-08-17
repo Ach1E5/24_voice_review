@@ -27,13 +27,29 @@
         <input type="text" id="search-tag" placeholder="ジャンルを入力...">
       </div>
 
+      <!-- ★追加：タグ選択プルダウン -->
+      <div class="filter-group">
+        <label>タグ一覧：</label>
+        <select id="select-tag">
+          <option value="">すべてのタグ</option>
+        </select>
+      </div>
+
       <div class="filter-group">
         <label>販売状況：</label>
         <select id="filter-status">
           <option value="all">すべて</option>
           <option value="常設販売中">販売中</option>
-          <option value="期間終了">期間終了</option>
+          <option value="期間終了">販売終了</option>
         </select>
+      </div>
+
+      <!-- ★追加：選択中タグのバッジ表示エリア -->
+      <div id="active-tag-badge" class="active-tag-container" style="display: none;">
+        <span>選択中のタグ：</span>
+        <span class="active-badge" onclick="clearTagFilter()">
+          <span id="active-tag-name"></span> ✖
+        </span>
       </div>
     </section>
 

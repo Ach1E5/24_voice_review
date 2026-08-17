@@ -7,6 +7,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♡♡", 
     tags: ["嫉妬", "かわいい", "友人"],
+    review: "〇〇",
     url: "https://"
   },
   {

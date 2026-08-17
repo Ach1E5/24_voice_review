@@ -294,7 +294,7 @@ input[type="text"]:focus, select:focus {
   transition: all 0.2s ease;
 }
 
-/* 上のボタン：感想を読む（ピンク） */
+/* 上のボタン：感想を読む */
 .review-btn {
   background-color: #ff9ebb;
   color: white;
@@ -306,7 +306,7 @@ input[type="text"]:focus, select:focus {
   transform: translateY(-2px);
 }
 
-/* 下のボタン：公式販売ページ（むらさき） */
+/* 下のボタン：公式販売ページ */
 .buy-btn-card {
   background-color: #9d94e8;
   color: white;
@@ -316,4 +316,15 @@ input[type="text"]:focus, select:focus {
 .buy-btn-card:hover {
   background-color: #887ce0;
   transform: translateY(-2px);
+}
+
+/* リンクがない（無効化）ときのグレーアウト設定 */
+.review-btn.disabled,
+.buy-btn-card.disabled {
+  background-color: #e0e0e0 !important;
+  color: #a0a0a0 !important;
+  box-shadow: none !important;
+  cursor: not-allowed;
+  pointer-events: none; /* クリック不可にする */
+  transform: none !important;
 }

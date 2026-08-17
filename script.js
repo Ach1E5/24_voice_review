@@ -34,9 +34,7 @@ function renderCards(data) {
 
   data.forEach((item, index) => {
     const card = document.createElement('div');
-    card.className = 'card card-fade-in'; // ★アニメーションのクラスを追加！
-
-    // ★フェードインさせるための設定
+    card.className = 'card card-fade-in';
     card.style.animationDelay = `${index * 0.05}s`;
 
     card.innerHTML = `
@@ -51,7 +49,10 @@ function renderCards(data) {
           ${item.tags.map(t => `<span class="tag">#${t}</span>`).join('')}
         </div>
       </div>
-      <button class="review-btn" onclick="openModal(${item.id})">感想を見る</button>
+      <div class="card-buttons">
+        <a href="${item.review}" target="_blank" rel="noopener" class="review-btn">感想を読む</a>
+        <a href="${item.url}" target="_blank" rel="noopener" class="buy-btn-card">公式販売ページ</a>
+      </div>
     `;
     list.appendChild(card);
   });

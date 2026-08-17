@@ -32,9 +32,13 @@ function renderCards(data) {
   const list = document.getElementById('card-list');
   list.innerHTML = '';
 
-  data.forEach(item => {
+  data.forEach((item, index) => {
     const card = document.createElement('div');
-    card.className = 'card';
+    card.className = 'card card-fade-in'; // ★アニメーションのクラスを追加！
+
+    // ★フェードインさせるための設定
+    card.style.animationDelay = `${index * 0.05}s`;
+
     card.innerHTML = `
       <div>
         <div class="card-header">

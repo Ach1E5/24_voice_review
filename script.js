@@ -37,6 +37,16 @@ function renderCards(data) {
     card.className = 'card card-fade-in';
     card.style.animationDelay = `${index * 0.05}s`;
 
+    // リンクが存在するかチェック（空文字や未設定の場合はdisabledにする）
+    const hasReview = item.review && item.review.trim() !== "";
+    const hasUrl = item.url && item.url.trim() !== "";
+
+    const reviewAttr = hasReview ? `href="${item.review}" target="_blank" rel="noopener"` : '';
+    const urlAttr = hasUrl ? `href="${item.url}" target="_blank" rel="noopener"` : '';
+
+    const reviewClass = hasReview ? 'review-btn' : 'review-btn disabled';
+    const urlClass = hasUrl ? 'buy-btn-card' : 'buy-btn-card disabled';
+
     card.innerHTML = `
       <div>
         <div class="card-header">
@@ -50,8 +60,8 @@ function renderCards(data) {
         </div>
       </div>
       <div class="card-buttons">
-        <a href="${item.review}" target="_blank" rel="noopener" class="review-btn">感想を読む</a>
-        <a href="${item.url}" target="_blank" rel="noopener" class="buy-btn-card">公式販売ページ</a>
+        <a ${reviewAttr} class="${reviewClass}">感想を読む</a>
+        <a ${urlAttr} class="${urlClass}">公式販売ページ</a>
       </div>
     `;
     list.appendChild(card);

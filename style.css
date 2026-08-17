@@ -221,3 +221,14 @@ input[type="text"]:focus, select:focus {
   margin-top: 15px;
   box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
 }
+
+/* フェードインのアニメーション */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* アニメーションを適用するクラス */
+.card-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}

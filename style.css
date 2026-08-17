@@ -339,3 +339,30 @@ input[type="text"]:focus, select:focus {
   background-color: #ffd0e0;
   transform: scale(1.05);
 }
+
+/* 選択中タグバッジエリア */
+.active-tag-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-top: 5px;
+}
+
+.active-badge {
+  background-color: #ff4d6d;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 8px rgba(255, 77, 109, 0.3);
+  transition: all 0.2s ease;
+}
+
+.active-badge:hover {
+  background-color: #e63956;
+  transform: scale(1.05);
+}

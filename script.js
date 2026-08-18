@@ -2,17 +2,32 @@
 let currentSelectedTag = '';
 let bookmarkedKeys = JSON.parse(localStorage.getItem('voice_bookmarks_keys')) || [];
 let showOnlyBookmarks = false;
+let shuffledData = []; // 初回シャッフルデータを保持
 
 // データ項目から一意のキーを生成（title + liver）
 function getItemKey(item) {
   return `${item.liver}_${item.title}`;
 }
 
+// 配列をランダムにシャッフル（フィッシャー–イェーツの手法）
+function shuffleArray(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 // 初期化処理
 function init() {
+  // 初回アクセス時にデータをランダムシャッフル
+  shuffledData = shuffleArray(voiceData);
+
   populateTagDropdown();
   populateLiverDropdown();
   initFilters();
+  initScrollTop();
   filterData();
 }
 
@@ -56,7 +71,7 @@ function populateLiverDropdown() {
   });
 }
 
-// フィルターイベントの初期化（まとめ）
+// フィルターイベントの初期化
 function initFilters() {
   const liverInput = document.getElementById('search-liver');
   const tagInput = document.getElementById('search-tag');
@@ -100,6 +115,67 @@ function initFilters() {
       filterData();
     });
   }
+
+  // ソート切り替え
+  const sortOrder = document.getElementById('sort-order');
+  if (sortOrder) sortOrder.addEventListener('change', filterData);
+
+  // リセットボタン
+  const btnReset = document.getElementById('btn-reset');
+  if (btnReset) btnReset.addEventListener('click', resetAllFilters);
+}
+
+// ページのトップへ戻るボタンのイベント初期化
+function initScrollTop() {
+  const backToTopBtn = document.getElementById('back-to-top');
+  if (!backToTopBtn) return;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.classList.add('show');
+    } else {
+      backToTopBtn.classList.remove('show');
+    }
+  });
+
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+
+// 全フィルター初期化（リセット）
+function resetAllFilters() {
+  const liverInput = document.getElementById('search-liver');
+  const tagInput = document.getElementById('search-tag');
+  const liverSelect = document.getElementById('select-liver');
+  const filterType = document.getElementById('filter-type');
+  const filterStatus = document.getElementById('filter-status');
+  const selectTag = document.getElementById('select-tag');
+  const sortOrder = document.getElementById('sort-order');
+
+  if (liverInput) liverInput.value = '';
+  if (tagInput) tagInput.value = '';
+  if (liverSelect) liverSelect.value = '';
+  if (filterType) filterType.value = 'all';
+  if (filterStatus) filterStatus.value = 'all';
+  if (selectTag) selectTag.value = '';
+  if (sortOrder) sortOrder.value = 'shuffle';
+
+  currentSelectedTag = '';
+  showOnlyBookmarks = false;
+
+  const bookmarkBtn = document.getElementById('btn-toggle-bookmark');
+  if (bookmarkBtn) {
+    bookmarkBtn.classList.remove('active');
+    bookmarkBtn.textContent = '☆ ブックマークのみ表示';
+  }
+
+  // 再びランダムに並び替え直す
+  shuffledData = shuffleArray(voiceData);
+  filterData();
 }
 
 // カード内のタグをクリックした時の処理
@@ -150,16 +226,27 @@ function toggleBookmarkFilter() {
   filterData();
 }
 
+// 糖度の文字列から数値（★の数など）を抽出するヘルパー
+function parseSweetness(sweetnessStr) {
+  if (!sweetnessStr) return 0;
+  const stars = (sweetnessStr.match(/★/g) || []).length;
+  if (stars > 0) return stars;
+  const num = parseFloat(sweetnessStr);
+  return isNaN(num) ? 0 : num;
+}
+
 function filterData() {
   const liverInput = document.getElementById('search-liver');
   const tagInput = document.getElementById('search-tag');
   const filterType = document.getElementById('filter-type');
   const filterStatus = document.getElementById('filter-status');
+  const sortOrder = document.getElementById('sort-order');
 
   const liverQuery = liverInput ? liverInput.value.trim().toLowerCase() : '';
   const tagQuery = tagInput ? tagInput.value.trim().toLowerCase() : '';
   const type = filterType ? filterType.value : 'all';
   const status = filterStatus ? filterStatus.value : 'all';
+  const sort = sortOrder ? sortOrder.value : 'shuffle';
 
   // バッジ表示制御
   const badgeContainer = document.getElementById('active-tag-badge');
@@ -173,7 +260,8 @@ function filterData() {
     }
   }
 
-  const filtered = voiceData.filter(item => {
+  // 絞り込み処理
+  let filtered = shuffledData.filter(item => {
     const itemKey = getItemKey(item);
     const matchLiver = liverQuery === '' || (item.liver && item.liver.toLowerCase().includes(liverQuery));
     const matchType = type === 'all' || item.type === type;
@@ -184,6 +272,17 @@ function filterData() {
 
     return matchLiver && matchType && matchStatus && matchTagInput && matchTagSelect && matchBookmark;
   });
+
+  // 並び替え処理
+  if (sort === 'sweetness-desc') {
+    filtered.sort((a, b) => parseSweetness(b.sweetness) - parseSweetness(a.sweetness));
+  } else if (sort === 'sweetness-asc') {
+    filtered.sort((a, b) => parseSweetness(a.sweetness) - parseSweetness(b.sweetness));
+  } else if (sort === 'liver-asc') {
+    filtered.sort((a, b) => (a.liver || '').localeCompare(b.liver || '', 'ja'));
+  } else if (sort === 'title-asc') {
+    filtered.sort((a, b) => (a.title || '').localeCompare(b.title || '', 'ja'));
+  }
 
   renderCards(filtered);
 }
@@ -199,8 +298,9 @@ function renderCards(data) {
     card.style.animationDelay = `${index * 0.05}s`;
 
     const itemKey = getItemKey(item);
-    const isBookmarked = bookmarkedKeys.includes(itemKey)
+    const isBookmarked = bookmarkedKeys.includes(itemKey);
     const bookmarkStar = `<svg width="22" height="22" viewBox="0 0 24 24" fill="${isBookmarked ? '#ff4d6d' : 'none'}" stroke="${isBookmarked ? '#ff4d6d' : '#ccc'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 0 0 .95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 0 0-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 0 0-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 0 0-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 0 0 .951-.69l1.519-4.674z"/></svg>`;
+    const bookmarkClass = isBookmarked ? 'bookmarked' : '';
 
     const hasReview = item.review && item.review.trim() !== "";
     const hasUrl = item.url && item.url.trim() !== "";
@@ -218,7 +318,6 @@ function renderCards(data) {
     const badgeExaU = '<span class="ex-badge ex-unpurchased-exa">EXAあり（未購入）</span>';
     const badgeNone = '<span class="ex-badge ex-none">EXなし</span>';
 
-    // 全パターン分岐
     let exBadgeHtml = '';
     switch (item.exStatus) {
       case 'ex_purchased':
@@ -244,7 +343,6 @@ function renderCards(data) {
         break;
     }
 
-    // タイプに応じたCSSクラス名の判定
     let typeClass = '';
     if (item.type === 'ルート選択ボイス') {
       typeClass = 'type-route';
@@ -265,7 +363,7 @@ function renderCards(data) {
           ${exBadgeHtml ? `<div class="card-header-bottom">${exBadgeHtml}</div>` : ''}
         </div>
         <h3 class="card-title">${item.title}</h3>
-        <div class="liver-name" style="cursor: pointer; display: inline-block;">👤 ${item.liver}</div>
+        <div class="liver-name">👤 ${item.liver}</div>
         <div class="sweetness">糖度: ${item.sweetness}</div>
         <div class="tags">
           ${item.tags ? item.tags.map(t => `<span class="tag" onclick="filterByTag('${t.replace(/'/g, "\\'")}')">#${t}</span>`).join('') : ''}
@@ -277,7 +375,6 @@ function renderCards(data) {
       </div>
     `;
 
-    // ブックマークボタンのクリックイベントを設定
     const bookmarkBtn = card.querySelector('.bookmark-btn');
     if (bookmarkBtn) {
       bookmarkBtn.addEventListener('click', (e) => {
@@ -287,7 +384,6 @@ function renderCards(data) {
       });
     }
 
-    // ライバー名要素にイベントを設定
     const liverElement = card.querySelector('.liver-name');
     if (liverElement) {
       liverElement.addEventListener('click', () => {

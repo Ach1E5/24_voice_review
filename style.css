@@ -119,7 +119,7 @@ input[type="text"]:focus, select:focus {
   font-weight: bold;
 }
 
-.status-badge.常設販売中 { background: #e3f9e5; color: #1f7a2a; }
+.status-badge.販売中 { background: #e3f9e5; color: #1f7a2a; }
 .status-badge.期間終了 { background: #ffe3e3; color: #c53030; }
 
 .card-title {

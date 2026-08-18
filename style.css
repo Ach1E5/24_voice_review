@@ -366,3 +366,28 @@ input[type="text"]:focus, select:focus {
   background-color: #e63956;
   transform: scale(1.05);
 }
+/* EX（おまけ）バッジのスタイル */
+.ex-badge {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+/* 購入済：柔らかいピンク */
+.ex-badge.ex-purchased {
+  background: #ffe3ec;
+  color: #d6336c;
+}
+
+/* 未購入：落ち着いたきいろ・オレンジ */
+.ex-badge.ex-unpurchased {
+  background: #fff3bf;
+  color: #d9480f;
+}
+
+/* なし：控えめなグレー */
+.ex-badge.ex-none {
+  background: #f1f3f5;
+  color: #868e96;
+}

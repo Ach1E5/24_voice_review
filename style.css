@@ -391,3 +391,14 @@ input[type="text"]:focus, select:focus {
   background: #f1f3f5;
   color: #868e96;
 }
+
+/* ボイス種別のバッジ */
+.type-badge {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  background-color: #f0f4f9;
+  color: #4a6fa5;
+  margin-right: 4px;
+}

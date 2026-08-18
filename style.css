@@ -404,3 +404,14 @@ select:focus {
 .card-fade-in {
   animation: fadeIn 0.4s ease-out forwards;
 }
+
+.liver-name {
+  cursor: pointer;
+  display: inline-block;
+  transition: opacity 0.2s;
+}
+
+.liver-name:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+}

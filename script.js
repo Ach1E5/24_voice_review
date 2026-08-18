@@ -165,7 +165,7 @@ function renderCards(data) {
           ${exBadgeHtml ? `<div class="card-header-bottom">${exBadgeHtml}</div>` : ''}
         </div>
         <h3 class="card-title">${item.title}</h3>
-        <div class="liver-name">👤 ${item.liver}</div>
+        <div class="liver-name" onclick="filterByLiver('${item.liver}')" style="cursor: pointer;">👤 ${item.liver}</div>
         <div class="sweetness">糖度: ${item.sweetness}</div>
         <div class="tags">
           ${item.tags.map(t => `<span class="tag" onclick="filterByTag('${t}')">#${t}</span>`).join('')}

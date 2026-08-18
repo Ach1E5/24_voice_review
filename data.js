@@ -9,7 +9,7 @@ const voiceData = [
     tags: ["嫉妬", "かわいい", "友人"],
     exStatus: "purchased",// ★ "purchased" (購入済) / "unpurchased" (未購入) / "none" (なし) / "purchased_exa" (EXAあり・購入済) または "unpurchased_exa" (EXAあり・未購入)
     review: "〇〇",
-    url: "https://"
+    url: "https://shop.nijisanji.jp/dig-00062_A.html"
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const voiceData = [
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
     exStatus: "purchased","purchased_exa",
-    review: "〇〇",
+    review: "https://shop.nijisanji.jp/dig-00096_A.html",
     url: ""
   },
   {
@@ -33,7 +33,7 @@ const voiceData = [
     tags: ["嫉妬", "かわいい", "友人"],
     exStatus: "purchased",
     review: "〇〇",
-    url: ""
+    url: "https://shop.nijisanji.jp/dig-01489.html"
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ const voiceData = [
     tags: ["嫉妬", "かわいい", "友人"],
     exStatus: "purchased",
     review: "〇〇",
-    url: ""
+    url: "https://shop.nijisanji.jp/dig-01456.html"
   },
   {
     id: 5,

@@ -1,11 +1,14 @@
 // グローバル変数の宣言
 let currentSelectedTag = '';
+let bookmarkedIds = JSON.parse(localStorage.getItem('voice_bookmarks')) || [];
+let showOnlyBookmarks = false;
 
 // 初期化処理
 function init() {
   populateTagDropdown();
+  populateLiverDropdown();
   initFilters();
-  renderCards(voiceData);
+  filterData();
 }
 
 // データ内のタグを重複なく集めてプルダウンの選択肢を作る関数
@@ -28,16 +31,56 @@ function populateTagDropdown() {
   });
 }
 
+// データ内のライバー名を重複なく集めてプルダウンの選択肢を作る関数
+function populateLiverDropdown() {
+  const liverSelect = document.getElementById('select-liver');
+  if (!liverSelect) return;
+
+  const allLivers = new Set();
+  voiceData.forEach(item => {
+    if (item.liver) {
+      allLivers.add(item.liver);
+    }
+  });
+
+  Array.from(allLivers).sort().forEach(liver => {
+    const option = document.createElement('option');
+    option.value = liver;
+    option.textContent = liver;
+    liverSelect.appendChild(option);
+  });
+}
+
 // フィルターイベントの初期化（まとめ）
 function initFilters() {
   const liverInput = document.getElementById('search-liver');
   const tagInput = document.getElementById('search-tag');
 
-  liverInput.addEventListener('input', filterData);
-  liverInput.addEventListener('search', filterData); // ×ボタン用
+  if (liverInput) {
+    liverInput.addEventListener('input', (e) => {
+      const liverSelect = document.getElementById('select-liver');
+      if (liverSelect) liverSelect.value = '';
+      filterData();
+    });
+    liverInput.addEventListener('search', (e) => {
+      const liverSelect = document.getElementById('select-liver');
+      if (liverSelect) liverSelect.value = '';
+      filterData();
+    });
+  }
 
-  tagInput.addEventListener('input', filterData);
-  tagInput.addEventListener('search', filterData);   // ×ボタン用
+  if (tagInput) {
+    tagInput.addEventListener('input', filterData);
+    tagInput.addEventListener('search', filterData);
+  }
+
+  const liverSelect = document.getElementById('select-liver');
+  if (liverSelect) {
+    liverSelect.addEventListener('change', (e) => {
+      if (liverInput) liverInput.value = e.target.value;
+      filterData();
+    });
+  }
 
   document.getElementById('filter-type').addEventListener('change', filterData);
   document.getElementById('filter-status').addEventListener('change', filterData);
@@ -58,10 +101,10 @@ function filterByTag(tagName) {
 // カード内のライバー名をクリックした時の処理
 function filterByLiver(liverName) {
   const liverInput = document.getElementById('search-liver');
-  if (liverInput) {
-    liverInput.value = liverName;
-    filterData();
-  }
+  const liverSelect = document.getElementById('select-liver');
+  if (liverInput) liverInput.value = liverName;
+  if (liverSelect) liverSelect.value = liverName;
+  filterData();
 }
 
 // 選択中タグを解除する関数
@@ -69,6 +112,30 @@ function clearTagFilter() {
   currentSelectedTag = '';
   const tagSelect = document.getElementById('select-tag');
   if (tagSelect) tagSelect.value = '';
+  filterData();
+}
+
+// ブックマークのON/OFF切り替え
+function toggleBookmark(id, event) {
+  event.stopPropagation();
+  const index = bookmarkedIds.indexOf(id);
+  if (index > -1) {
+    bookmarkedIds.splice(index, 1);
+  } else {
+    bookmarkedIds.push(id);
+  }
+  localStorage.setItem('voice_bookmarks', JSON.stringify(bookmarkedIds));
+  filterData();
+}
+
+// ブックマークのみ表示の切り替え
+function toggleBookmarkFilter() {
+  showOnlyBookmarks = !showOnlyBookmarks;
+  const btn = document.getElementById('btn-toggle-bookmark');
+  if (btn) {
+    btn.classList.toggle('active', showOnlyBookmarks);
+    btn.textContent = showOnlyBookmarks ? '★ ブックマークのみ表示中' : '☆ ブックマークのみ表示';
+  }
   filterData();
 }
 
@@ -81,11 +148,13 @@ function filterData() {
   // バッジ表示制御
   const badgeContainer = document.getElementById('active-tag-badge');
   const badgeName = document.getElementById('active-tag-name');
-  if (currentSelectedTag) {
-    badgeName.textContent = `#${currentSelectedTag}`;
-    badgeContainer.style.display = 'flex';
-  } else {
-    badgeContainer.style.display = 'none';
+  if (badgeContainer && badgeName) {
+    if (currentSelectedTag) {
+      badgeName.textContent = `#${currentSelectedTag}`;
+      badgeContainer.style.display = 'flex';
+    } else {
+      badgeContainer.style.display = 'none';
+    }
   }
 
   const filtered = voiceData.filter(item => {
@@ -94,8 +163,9 @@ function filterData() {
     const matchStatus = status === 'all' || item.status === status;
     const matchTagInput = tagQuery === '' || item.tags.some(t => t.toLowerCase().includes(tagQuery));
     const matchTagSelect = currentSelectedTag === '' || item.tags.includes(currentSelectedTag);
+    const matchBookmark = !showOnlyBookmarks || bookmarkedIds.includes(item.id);
 
-    return matchLiver && matchType && matchStatus && matchTagInput && matchTagSelect;
+    return matchLiver && matchType && matchStatus && matchTagInput && matchTagSelect && matchBookmark;
   });
 
   renderCards(filtered);
@@ -109,6 +179,10 @@ function renderCards(data) {
     const card = document.createElement('div');
     card.className = 'card card-fade-in';
     card.style.animationDelay = `${index * 0.05}s`;
+
+    const isBookmarked = bookmarkedIds.includes(item.id);
+    const bookmarkStar = isBookmarked ? '★' : '☆';
+    const bookmarkClass = isBookmarked ? 'bookmarked' : '';
 
     const hasReview = item.review && item.review.trim() !== "";
     const hasUrl = item.url && item.url.trim() !== "";
@@ -163,6 +237,7 @@ function renderCards(data) {
     }
 
     card.innerHTML = `
+      <button class="bookmark-btn ${bookmarkClass}" onclick="toggleBookmark('${item.id}', event)">${bookmarkStar}</button>
       <div>
         <div class="card-header">
           <div class="card-header-top">

@@ -136,11 +136,21 @@ function renderCards(data) {
         break;
     }
 
+    // ★ここでクラス名を判定
+    let typeClass = '';
+    if (item.type === 'ルート選択ボイス') {
+      typeClass = 'type-route';
+    } else if (item.type === 'セリフボイス') {
+      typeClass = 'type-dialogue';
+    } else if (item.type === 'コンセプトボイス') {
+      typeClass = 'type-concept';
+    }
+
     card.innerHTML = `
       <div>
         <div class="card-header">
           <div class="card-header-top">
-            <span class="type-badge ${item.type || ''}">${item.type || ''}</span>
+            <span class="type-badge ${typeClass}">${item.type || ''}</span>
             <span class="status-badge ${item.status}">${item.status}</span>
           </div>
           ${exBadgeHtml ? `<div class="card-header-bottom">${exBadgeHtml}</div>` : ''}

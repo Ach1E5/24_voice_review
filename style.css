@@ -426,9 +426,9 @@ input[type="search"]::-webkit-search-cancel-button {
   border-color: var(--accent-color);
 }
 
-/* カード内の★ボタン（右上に配置する場合） */
+/* カード内の★ボタン（右上配置） */
 .card {
-  position: relative; /* 位置調整用 */
+  position: relative;
 }
 
 .bookmark-btn {
@@ -443,6 +443,8 @@ input[type="search"]::-webkit-search-cancel-button {
   transition: transform 0.2s, color 0.2s;
   padding: 0;
   line-height: 1;
+  pointer-events: auto;
+  z-index: 20;
 }
 
 .bookmark-btn:hover {

@@ -59,10 +59,13 @@ header h1 {
   margin-left: 8px;
 }
 
-/* 検索窓とセレクトボックス（searchタイプも確実に共通指定） */
+/* 検索窓とセレクトボックス */
 input[type="text"],
 input[type="search"],
 select {
+  -webkit-appearance: none; /* ブラウザの四角い見た目をリセット */
+  -moz-appearance: none;
+  appearance: none;
   width: 100%;
   padding: 12px 20px;
   border-radius: 30px;
@@ -74,8 +77,6 @@ select {
   box-sizing: border-box;
   transition: all 0.2s ease;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
-  -webkit-appearance: none;
-  appearance: none;
 }
 
 input[type="text"]:focus,

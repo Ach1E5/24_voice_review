@@ -162,8 +162,6 @@ select:focus {
   font-size: 0.75rem;
   font-weight: bold;
   border-radius: 4px;
-  background-color: #e2e8f0; /* デフォルト背景 */
-  color: #475569;            /* デフォルト文字色 */
 }
 
 /* --- タイプ別の色指定 --- */

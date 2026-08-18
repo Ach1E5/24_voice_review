@@ -196,25 +196,23 @@ input[type="search"]::-webkit-search-cancel-button {
   right: 15px !important;
   background: transparent !important;
   border: none !important;
-  font-size: 1.5rem !important;
-  color: #ccc;
   cursor: pointer !important;
   padding: 4px !important;
-  line-height: 1 !important;
-  transition: transform 0.2s ease, color 0.2s ease;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: transform 0.2s ease;
   pointer-events: auto !important;
-  z-index: 50 !important; /* 他の要素に埋もれないように一番前面へ */
+  z-index: 50 !important;
 }
 
 .bookmark-btn:hover {
-  transform: scale(1.25);
-  color: #ff6f91;
+  transform: scale(1.2);
 }
 
-/* ブックマーク済みの時の色 */
-.bookmark-btn.bookmarked {
-  color: #ff4d6d;
-  text-shadow: 0 0 6px rgba(255, 77, 109, 0.3);
+/* SVG自体のトランジション */
+.bookmark-btn svg path {
+  transition: fill 0.2s ease, stroke 0.2s ease;
 }
 
 /* カードヘッダーエリア */

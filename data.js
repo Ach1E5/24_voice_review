@@ -1,13 +1,23 @@
+// 【exStatus の指定パターン】
+// ex_purchased : 「EXあり（購入済）」のみ
+// ex_p_exa_u    : 「EXあり（購入済）」＋「EXAあり（未購入）」
+// ex_u_exa_p    : 「EXあり（未購入）」＋「EXAあり（購入済）」
+// ex_p_exa_p    : 「EXあり（購入済）」＋「EXAあり（購入済）」
+// ex_u_exa_u    : 「EXあり（未購入）」＋「EXAあり（未購入）」
+// none          : 「EXなし」
+// 【type の指定パターン】
+// ★「コンセプトボイス」「セリフボイス」「ルート選択ボイス」のいずれか
+
 const voiceData = [
   {
     id: 1,
     title: "束縛ボイス",
     liver: "赤城ウェン",
-    type: "コンセプトボイス",// ★「コンセプトボイス」「セリフボイス」「ルート選択ボイス」のいずれか
+    type: "コンセプトボイス",
     status: "販売中",
     sweetness: "♥♥♥♡♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",// ★ "purchased" (購入済) / "unpurchased" (未購入) / "none" (なし) / "purchased_exa" (EXAあり・購入済) または "unpurchased_exa" (EXAあり・未購入)
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: "https://shop.nijisanji.jp/dig-00062_A.html"
   },
@@ -19,7 +29,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased","purchased_exa",
+    exStatus: "ex_p_exa_p",
     review: "https://shop.nijisanji.jp/dig-00096_A.html",
     url: ""
   },
@@ -31,7 +41,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: "https://shop.nijisanji.jp/dig-01489.html"
   },
@@ -43,7 +53,7 @@ const voiceData = [
     status: "期間終了",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: "https://shop.nijisanji.jp/dig-01456.html"
   },
@@ -67,7 +77,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -103,7 +113,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -115,7 +125,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -127,7 +137,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -139,7 +149,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -151,7 +161,7 @@ const voiceData = [
     status: "販売終了",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -163,7 +173,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -175,7 +185,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -187,7 +197,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -235,7 +245,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -247,7 +257,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased","purchased_exa",
+    exStatus: "ex_p_exa_p",
     review: "〇〇",
     url: ""
   },
@@ -271,7 +281,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -295,7 +305,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -307,7 +317,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased","purchased_exa",
+    exStatus: "ex_p_exa_p",
     review: "〇〇",
     url: ""
   },
@@ -343,7 +353,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -355,7 +365,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -367,7 +377,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -391,7 +401,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -403,7 +413,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -415,7 +425,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -427,7 +437,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -439,7 +449,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -451,7 +461,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -463,7 +473,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -475,7 +485,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -487,7 +497,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -499,7 +509,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased","purchased_exa",
+    exStatus: "ex_p_exa_p",
     review: "〇〇",
     url: ""
   },
@@ -511,7 +521,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -523,7 +533,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -535,7 +545,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -559,7 +569,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -571,7 +581,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -583,7 +593,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -595,7 +605,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -619,7 +629,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased","purchased_exa",
+    exStatus: "ex_p_exa_p",
     review: "〇〇",
     url: ""
   },
@@ -631,7 +641,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -643,7 +653,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -655,7 +665,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -667,7 +677,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -679,7 +689,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased","purchased_exa",
+    exStatus: "ex_p_exa_p",
     review: "〇〇",
     url: ""
   },
@@ -691,7 +701,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
   },
@@ -703,7 +713,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "none",
     review: "〇〇",
     url: ""
   },
@@ -715,7 +725,7 @@ const voiceData = [
     status: "販売中",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
-    exStatus: "purchased",
+    exStatus: "none",
     review: "〇〇",
     url: ""
   },

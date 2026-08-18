@@ -109,21 +109,28 @@ function renderCards(data) {
     const reviewClass = hasReview ? 'review-btn' : 'review-btn disabled';
     const urlClass = hasUrl ? 'buy-btn-card' : 'buy-btn-card disabled';
 
-    // EXバッジの生成
+    // EXバッジの生成（複数並べられる処理）
     let exBadgeHtml = '';
     if (item.exStatus === 'purchased') {
       exBadgeHtml = '<span class="ex-badge ex-purchased">EXあり（購入済）</span>';
     } else if (item.exStatus === 'unpurchased') {
       exBadgeHtml = '<span class="ex-badge ex-unpurchased">EXあり（未購入）</span>';
     } else if (item.exStatus === 'purchased_exa') {
-      exBadgeHtml = '<span class="ex-badge ex-purchased-exa">EXAあり（購入済）</span>';
+      // EX(購入済) と EXA(購入済) の2つを並べる
+      exBadgeHtml = `
+        <span class="ex-badge ex-purchased">EXあり（購入済）</span>
+        <span class="ex-badge ex-purchased-exa">EXAあり（購入済）</span>
+      `;
     } else if (item.exStatus === 'unpurchased_exa') {
-      exBadgeHtml = '<span class="ex-badge ex-unpurchased-exa">EXAあり（未購入）</span>';
+      // EX(未購入) と EXA(未購入) の2つを並べる
+      exBadgeHtml = `
+        <span class="ex-badge ex-unpurchased">EXあり（未購入）</span>
+        <span class="ex-badge ex-unpurchased-exa">EXAあり（未購入）</span>
+      `;
     } else if (item.exStatus === 'none') {
       exBadgeHtml = '<span class="ex-badge ex-none">EXなし</span>';
     }
 
-    // ★ 1段目（card-header-top）と2段目（card-header-bottom）に分けたHTML
     card.innerHTML = `
       <div>
         <div class="card-header">
@@ -148,6 +155,5 @@ function renderCards(data) {
     list.appendChild(card);
   });
 }
-
 // ページ読み込み時に実行
 document.addEventListener('DOMContentLoaded', init);

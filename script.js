@@ -114,10 +114,13 @@ function renderCards(data) {
       exBadgeHtml = '<span class="ex-badge ex-purchased">EXあり（購入済）</span>';
     } else if (item.exStatus === 'unpurchased') {
       exBadgeHtml = '<span class="ex-badge ex-unpurchased">EXあり（未購入）</span>';
+    } else if (item.exStatus === 'purchased_exa') {
+      exBadgeHtml = '<span class="ex-badge ex-purchased-exa">EXAあり（購入済）</span>';
+    } else if (item.exStatus === 'unpurchased_exa') {
+      exBadgeHtml = '<span class="ex-badge ex-unpurchased-exa">EXAあり（未購入）</span>';
     } else if (item.exStatus === 'none') {
       exBadgeHtml = '<span class="ex-badge ex-none">EXなし</span>';
     }
-
     card.innerHTML = `
       <div>
         <div class="card-header">

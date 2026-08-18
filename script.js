@@ -200,7 +200,8 @@ function renderCards(data) {
 
     const itemKey = getItemKey(item);
     const isBookmarked = bookmarkedKeys.includes(itemKey);
-    const bookmarkStar = isBookmarked ? '★' : '☆';
+    // ↓ ここを丸ごと差し替え
+const bookmarkStar = `<svg width="22" height="22" viewBox="0 0 24 24" fill="${isBookmarked ? '#ff4d6d' : 'none'}" stroke="${isBookmarked ? '#ff4d6d' : '#ccc'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.161.75c.433.063.605.596.292.901l-3.734 3.64a2.124 2.124 0 0 0-.611 1.879l.882 5.14c.074.431-.38.761-.767.558l-4.616-2.427a2.122 2.122 0 0 0-1.974 0l-4.616 2.427c-.387.203-.841-.127-.767-.558l.882-5.14a2.123 2.123 0 0 0-.611-1.879L.167 9.785c-.313-.305-.141-.838.292-.901l5.161-.75a2.123 2.123 0 0 0 1.595-1.16l2.31-4.679z"/></svg>`;
     const bookmarkClass = isBookmarked ? 'bookmarked' : '';
 
     const hasReview = item.review && item.review.trim() !== "";

@@ -1,24 +1,24 @@
-// ボイスの感想データ専用ファイル
 const voiceData = [
   {
     id: 1,
-    title: "2026誕生日ボイス",
-    liver: "〇〇〇〇",
-    status: "常設販売中",
-    sweetness: "♥♥♥♥♡",
-    tags: ["シチュエーション", "手紙"],
-    review: "https://note.com/...",
-    url: "https://shop.nijisanji.jp/..."
+    title: "束縛ボイス",
+    liver: "赤城ウェン",
+    status: "販売中",
+    sweetness: "♥♥♥♡♡", 
+    tags: ["嫉妬", "かわいい", "友人"],
+    review: "〇〇",
+    url: "https://"
   },
   {
     id: 2,
-    title: "季節ボイス（夏）",
-    liver: "△△△△",
+    title: "束縛ボイスvol.2",
+    liver: "赤城ウェン",
     status: "期間終了",
-    sweetness: "♥♥♡♡♡",
-    tags: ["ASMR", "学パロ"],
-    review: "",
-    url: "https://shop.nijisanji.jp/..."
+    sweetness: "♥♥♥♥♡",
+    tags: ["嫉妬", "かわいい", "友人"],
+    review: "〇〇",
+    url: ""
   }
-  // ★新しいカードを追加するときは、このファイル（data.js）だけに追記していけばOK！
 ];
+
+let currentSelectedTag = '';

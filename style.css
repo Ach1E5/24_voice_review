@@ -19,7 +19,7 @@ header {
   color: white;
   text-align: center;
   padding: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 header h1 {
@@ -33,7 +33,7 @@ header h1 {
   padding: 0 15px;
 }
 
-/* フィルターエリア（縦にゆったり並べる） */
+/* フィルターエリア */
 .filter-section {
   background: var(--card-bg);
   padding: 24px;
@@ -59,8 +59,9 @@ header h1 {
   margin-left: 8px;
 }
 
-/* 検索窓とセレクトボックスを大きく・ぷっくり角丸に */
-input[type="text"], select {
+/* 検索窓とセレクトボックス */
+input[type="text"],
+select {
   width: 100%;
   padding: 12px 20px;
   border-radius: 30px;
@@ -71,28 +72,56 @@ input[type="text"], select {
   font-size: 1rem;
   box-sizing: border-box;
   transition: all 0.2s ease;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
-/* 入力欄にフォーカスした時のアニメーション */
-input[type="text"]:focus, select:focus {
+input[type="text"]:focus,
+select:focus {
   border-color: var(--accent-color);
   box-shadow: 0 0 8px rgba(255, 111, 145, 0.3);
   background-color: #fff9fa;
 }
 
-/* カード一覧 */
+/* 選択中タグバッジエリア */
+.active-tag-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-top: 5px;
+}
+
+.active-badge {
+  background-color: #ff4d6d;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 8px rgba(255, 77, 109, 0.3);
+  transition: all 0.2s ease;
+}
+
+.active-badge:hover {
+  background-color: #e63956;
+  transform: scale(1.05);
+}
+
+/* カード一覧 grid */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
 }
 
+/* カード本体 */
 .card {
   background: var(--card-bg);
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   flex-direction: column;
@@ -105,11 +134,34 @@ input[type="text"]:focus, select:focus {
   box-shadow: 0 10px 20px rgba(255, 111, 145, 0.15);
 }
 
+/* ★カードヘッダーエリア（上段・下段の2段構成） */
 .card-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 6px;
   margin-bottom: 8px;
+}
+
+.card-header-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.card-header-bottom {
+  display: flex;
+  justify-content: flex-start; /* 左揃え */
+}
+
+/* 各種バッジスタイル */
+.type-badge {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  background-color: #f0f4f9;
+  color: #4a6fa5;
 }
 
 .status-badge {
@@ -119,9 +171,53 @@ input[type="text"]:focus, select:focus {
   font-weight: bold;
 }
 
-.status-badge.販売中 { background: #e3f9e5; color: #1f7a2a; }
-.status-badge.期間終了 { background: #ffe3e3; color: #c53030; }
+.status-badge.販売中,
+.status-badge.常設販売中 {
+  background: #e3f9e5;
+  color: #1f7a2a;
+}
 
+.status-badge.期間終了 {
+  background: #ffe3e3;
+  color: #c53030;
+}
+
+/* EXバッジ共通 */
+.ex-badge {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.ex-badge.ex-purchased {
+  background: #ffe3ec;
+  color: #d6336c;
+}
+
+.ex-badge.ex-unpurchased {
+  background: #fff3bf;
+  color: #d9480f;
+}
+
+.ex-badge.ex-purchased-exa {
+  background: #fcc2d7;
+  color: #a61e4d;
+}
+
+.ex-badge.ex-unpurchased-exa {
+  background: #ffe8cc;
+  color: #d9480f;
+}
+
+.ex-badge.ex-none {
+  background: #f1f3f5;
+  color: #868e96;
+}
+
+/* カード内の文章コンテンツ */
 .card-title {
   font-size: 1.1rem;
   margin: 8px 0 4px 0;
@@ -154,122 +250,13 @@ input[type="text"]:focus, select:focus {
   padding: 4px 10px;
   border-radius: 12px;
   font-weight: bold;
-}
-
-.review-btn {
-  background-color: var(--main-color);
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 25px;
   cursor: pointer;
-  font-weight: bold;
-  font-family: inherit;
-  margin-top: 10px;
-  transition: background 0.2s;
-  box-shadow: 0 4px 10px rgba(255, 183, 197, 0.4);
-}
-
-.review-btn:hover {
-  background-color: var(--accent-color);
-}
-
-/* ポップアップ */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.4);
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-}
-
-.modal-content {
-  background: white;
-  padding: 30px;
-  border-radius: 24px;
-  max-width: 500px;
-  width: 90%;
-  position: relative;
-  max-height: 80vh;
-  overflow-y: auto;
-  border: 2px solid #ffe3e8;
-}
-
-.close-btn {
-  position: absolute;
-  top: 15px; right: 20px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #aaa;
-}
-
-.modal-text {
-  line-height: 1.6;
-  white-space: pre-wrap;
-}
-
-.buy-btn {
-  display: inline-block;
-  background: #ff4d6d;
-  color: white;
-  padding: 10px 22px;
-  border-radius: 20px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-top: 15px;
-  box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
-}
-
-/* フェードインのアニメーション */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* アニメーションを適用するクラス */
-.card-fade-in {
-  animation: fadeIn 0.4s ease-out forwards;
-}
-
-/* カード内のボタンエリア */
-.card-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.review-btn, .buy-btn-card {
-  display: block;
-  text-align: center;
-  padding: 10px;
-  border-radius: 20px;
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 0.9rem;
   transition: all 0.2s ease;
 }
 
-.review-btn {
-  background-color: var(--main-color);
-  color: white;
-  box-shadow: 0 4px 10px rgba(255, 183, 197, 0.4);
-}
-
-.review-btn:hover {
-  background-color: var(--accent-color);
-}
-
-.buy-btn-card {
-  background-color: #fff0f3;
-  color: #ff4d6d;
-  border: 1px solid #ffccd5;
-}
-
-.buy-btn-card:hover {
-  background-color: #ffe3e8;
+.tag:hover {
+  background-color: #ffd0e0;
+  transform: scale(1.05);
 }
 
 /* カード内のボタンエリア */
@@ -280,8 +267,8 @@ input[type="text"]:focus, select:focus {
   margin-top: 15px;
 }
 
-/* ボタン共通デザイン */
-.review-btn, .buy-btn-card {
+.review-btn,
+.buy-btn-card {
   display: block;
   width: 100%;
   padding: 12px 0;
@@ -318,98 +305,81 @@ input[type="text"]:focus, select:focus {
   transform: translateY(-2px);
 }
 
-/* リンクがない（無効化）ときのグレーアウト設定 */
+/* リンク無効時のスタイル */
 .review-btn.disabled,
 .buy-btn-card.disabled {
   background-color: #e0e0e0 !important;
   color: #a0a0a0 !important;
   box-shadow: none !important;
   cursor: not-allowed;
-  pointer-events: none; /* クリック不可にする */
+  pointer-events: none;
   transform: none !important;
 }
 
-/* タグをクリック可能にするスタイル */
-.tag {
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.tag:hover {
-  background-color: #ffd0e0;
-  transform: scale(1.05);
-}
-
-/* 選択中タグバッジエリア */
-.active-tag-container {
-  display: flex;
+/* ポップアップ（モーダル） */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  justify-content: center;
   align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  color: var(--text-color);
-  margin-top: 5px;
+  z-index: 100;
 }
 
-.active-badge {
-  background-color: #ff4d6d;
-  color: white;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-weight: bold;
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 24px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 2px solid #ffe3e8;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 1.5rem;
   cursor: pointer;
-  font-size: 0.85rem;
-  box-shadow: 0 2px 8px rgba(255, 77, 109, 0.3);
-  transition: all 0.2s ease;
+  color: #aaa;
 }
 
-.active-badge:hover {
-  background-color: #e63956;
-  transform: scale(1.05);
+.modal-text {
+  line-height: 1.6;
+  white-space: pre-wrap;
 }
-/* EX（おまけ）バッジのスタイル */
-.ex-badge {
-  font-size: 0.75rem;
-  padding: 4px 10px;
-  border-radius: 12px;
+
+.buy-btn {
+  display: inline-block;
+  background: #ff4d6d;
+  color: white;
+  padding: 10px 22px;
+  border-radius: 20px;
+  text-decoration: none;
   font-weight: bold;
+  margin-top: 15px;
+  box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
 }
 
-/* 購入済：柔らかいピンク */
-.ex-badge.ex-purchased {
-  background: #ffe3ec;
-  color: #d6336c;
+/* フェードインアニメーション */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* 未購入：落ち着いたきいろ・オレンジ */
-.ex-badge.ex-unpurchased {
-  background: #fff3bf;
-  color: #d9480f;
-}
-
-/* なし：控えめなグレー */
-.ex-badge.ex-none {
-  background: #f1f3f5;
-  color: #868e96;
-}
-
-/* ボイス種別のバッジ */
-.type-badge {
-  font-size: 0.75rem;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-weight: bold;
-  background-color: #f0f4f9;
-  color: #4a6fa5;
-  margin-right: 4px;
-}
-/* EXAあり（購入済）：濃いめピンク */
-.ex-badge.ex-purchased-exa {
-  background: #fcc2d7;
-  color: #a61e4d;
-}
-
-/* EXAあり（未購入）：濃いめオレンジ */
-.ex-badge.ex-unpurchased-exa {
-  background: #ffe8cc;
-  color: #d9480f;
+.card-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
 }

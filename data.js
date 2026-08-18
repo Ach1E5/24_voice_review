@@ -4,7 +4,7 @@ const voiceData = [
     title: "束縛ボイス",
     liver: "赤城ウェン",
     type: "コンセプトボイス",
-    status: "常設販売中",
+    status: "販売中",
     sweetness: "♥♥♥♡♡", 
     tags: ["嫉妬", "かわいい", "友人"],
     exStatus: "purchased",

@@ -436,3 +436,68 @@ input[type="search"]::-webkit-search-cancel-button {
 .card-fade-in {
   animation: fadeIn 0.4s ease-out forwards;
 }
+
+/* ==========================================
+   リセットボタン & トップへ戻るボタン
+   ========================================== */
+
+/* リセットボタン */
+.btn-reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 2px solid #ffccd5;
+  background-color: #fff;
+  color: #888;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: 0.9rem;
+  align-self: flex-end; /* 右寄りに配置 */
+}
+
+.btn-reset:hover {
+  background-color: #ffe8ec;
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+}
+
+/* トップへ戻るボタン */
+.back-to-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 111, 145, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background-color: #ff4d6d;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(255, 77, 109, 0.5);
+}

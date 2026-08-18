@@ -165,10 +165,10 @@ function renderCards(data) {
           ${exBadgeHtml ? `<div class="card-header-bottom">${exBadgeHtml}</div>` : ''}
         </div>
         <h3 class="card-title">${item.title}</h3>
-        <div class="liver-name">👤 ${item.liver}</div>
+        <div class="liver-name" style="cursor: pointer; display: inline-block;">👤 ${item.liver}</div>
         <div class="sweetness">糖度: ${item.sweetness}</div>
         <div class="tags">
-          ${item.tags.map(t => `<span class="tag" onclick="filterByTag('${t}')">#${t}</span>`).join('')}
+          ${item.tags.map(t => `<span class="tag" onclick="filterByTag('${t.replace(/'/g, "\\'")}')">#${t}</span>`).join('')}
         </div>
       </div>
       <div class="card-buttons">
@@ -177,7 +177,7 @@ function renderCards(data) {
       </div>
     `;
 
-    // ライバー名要素に安全にクリックイベントを付与
+    // ライバー名要素にイベントを設定
     const liverElement = card.querySelector('.liver-name');
     if (liverElement) {
       liverElement.addEventListener('click', () => {

@@ -1,10 +1,10 @@
 // 【exStatus の指定パターン】
 // ex_purchased : 「EXあり（購入済）」のみ
-// ex_p_exa_u    : 「EXあり（購入済）」＋「EXAあり（未購入）」
-// ex_u_exa_p    : 「EXあり（未購入）」＋「EXAあり（購入済）」
-// ex_p_exa_p    : 「EXあり（購入済）」＋「EXAあり（購入済）」
-// ex_u_exa_u    : 「EXあり（未購入）」＋「EXAあり（未購入）」
-// none          : 「EXなし」
+// ex_p_exa_u   : 「EXあり（購入済）」＋「EXAあり（未購入）」
+// ex_u_exa_p   : 「EXあり（未購入）」＋「EXAあり（購入済）」
+// ex_p_exa_p   : 「EXあり（購入済）」＋「EXAあり（購入済）」
+// ex_u_exa_u   : 「EXあり（未購入）」＋「EXAあり（未購入）」
+// none         : 「EXなし」
 // 【type の指定パターン】
 // ★「コンセプトボイス」「セリフボイス」「ルート選択ボイス」のいずれか
 
@@ -129,7 +129,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 11,
     title: "シェアハウスボイス",
     liver: "伊波ライ",
@@ -141,7 +141,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 12,
     title: "お迎えボイス",
     liver: "伊波ライ",
@@ -153,7 +153,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 13,
     title: "キミと夜空ボイス",
     liver: "伊波ライ",
@@ -165,7 +165,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 14,
     title: "夜更かしボイス",
     liver: "伊波ライ",
@@ -177,7 +177,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 15,
     title: "パーティーボイス",
     liver: "伊波ライ",
@@ -189,7 +189,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 16,
     title: "アイドルパロディボイス",
     liver: "伊波ライ",
@@ -201,7 +201,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 17,
     title: "ほろ酔いボイス",
     liver: "伊波ライ",
@@ -213,7 +213,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 18,
     title: "ほろ酔いボイスvol.2",
     liver: "伊波ライ",
@@ -225,7 +225,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 19,
     title: "ミニライバーボイス",
     liver: "伊波ライ",
@@ -237,7 +237,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 20,
     title: "Shoothing Voice",
     liver: "伊波ライ",
@@ -249,7 +249,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 21,
     title: "束縛ボイスvol.2",
     liver: "伊波ライ",
@@ -261,7 +261,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 22,
     title: "バレンタインボイス2024",
     liver: "伊波ライ",
@@ -273,7 +273,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 23,
     title: "わがままボイス",
     liver: "伊波ライ",
@@ -285,7 +285,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 24,
     title: "ツンデレボイス",
     liver: "伊波ライ",
@@ -297,7 +297,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 25,
     title: "バレンタインボイス2024",
     liver: "宇佐美リト",
@@ -309,7 +309,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 26,
     title: "束縛ボイスvol.2",
     liver: "宇佐美リト",
@@ -321,7 +321,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 27,
     title: "バレンタインボイス2019",
     liver: "卯月コウ",
@@ -333,7 +333,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 28,
     title: "ホワイトデーボイス2019",
     liver: "卯月コウ",
@@ -345,7 +345,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 29,
     title: "ヴィランボイス",
     liver: "佐伯イッテツ",
@@ -357,7 +357,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 30,
     title: "束縛ボイス",
     liver: "佐伯イッテツ",
@@ -489,7 +489,7 @@ const voiceData = [
     review: "〇〇",
     url: ""
   },
-   {
+  {
     id: 41,
     title: "甘やかしボイスvol.2",
     liver: "緋八マナ",

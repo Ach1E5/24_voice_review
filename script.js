@@ -1,7 +1,12 @@
 // グローバル変数の宣言
 let currentSelectedTag = '';
-let bookmarkedIds = JSON.parse(localStorage.getItem('voice_bookmarks')) || [];
+let bookmarkedKeys = JSON.parse(localStorage.getItem('voice_bookmarks_keys')) || [];
 let showOnlyBookmarks = false;
+
+// データ項目から一意のキーを生成（title + liver）
+function getItemKey(item) {
+  return `${item.liver}_${item.title}`;
+}
 
 // 初期化処理
 function init() {
@@ -57,12 +62,12 @@ function initFilters() {
   const tagInput = document.getElementById('search-tag');
 
   if (liverInput) {
-    liverInput.addEventListener('input', (e) => {
+    liverInput.addEventListener('input', () => {
       const liverSelect = document.getElementById('select-liver');
       if (liverSelect) liverSelect.value = '';
       filterData();
     });
-    liverInput.addEventListener('search', (e) => {
+    liverInput.addEventListener('search', () => {
       const liverSelect = document.getElementById('select-liver');
       if (liverSelect) liverSelect.value = '';
       filterData();
@@ -115,16 +120,16 @@ function clearTagFilter() {
   filterData();
 }
 
-// ブックマークのON/OFF切り替え
-function toggleBookmark(id, event) {
+// ブックマークのON/OFF切り替え（キーで判定）
+function toggleBookmark(key, event) {
   event.stopPropagation();
-  const index = bookmarkedIds.indexOf(id);
+  const index = bookmarkedKeys.indexOf(key);
   if (index > -1) {
-    bookmarkedIds.splice(index, 1);
+    bookmarkedKeys.splice(index, 1);
   } else {
-    bookmarkedIds.push(id);
+    bookmarkedKeys.push(key);
   }
-  localStorage.setItem('voice_bookmarks', JSON.stringify(bookmarkedIds));
+  localStorage.setItem('voice_bookmarks_keys', JSON.stringify(bookmarkedKeys));
   filterData();
 }
 
@@ -158,12 +163,13 @@ function filterData() {
   }
 
   const filtered = voiceData.filter(item => {
+    const itemKey = getItemKey(item);
     const matchLiver = liverQuery === '' || item.liver.toLowerCase().includes(liverQuery);
     const matchType = type === 'all' || item.type === type;
     const matchStatus = status === 'all' || item.status === status;
     const matchTagInput = tagQuery === '' || item.tags.some(t => t.toLowerCase().includes(tagQuery));
     const matchTagSelect = currentSelectedTag === '' || item.tags.includes(currentSelectedTag);
-    const matchBookmark = !showOnlyBookmarks || bookmarkedIds.includes(item.id);
+    const matchBookmark = !showOnlyBookmarks || bookmarkedKeys.includes(itemKey);
 
     return matchLiver && matchType && matchStatus && matchTagInput && matchTagSelect && matchBookmark;
   });
@@ -180,7 +186,8 @@ function renderCards(data) {
     card.className = 'card card-fade-in';
     card.style.animationDelay = `${index * 0.05}s`;
 
-    const isBookmarked = bookmarkedIds.includes(item.id);
+    const itemKey = getItemKey(item);
+    const isBookmarked = bookmarkedKeys.includes(itemKey);
     const bookmarkStar = isBookmarked ? '★' : '☆';
     const bookmarkClass = isBookmarked ? 'bookmarked' : '';
 
@@ -236,8 +243,11 @@ function renderCards(data) {
       typeClass = 'type-concept';
     }
 
+    // シングルクォーテーションのエスケープ処理
+    const escapedKey = itemKey.replace(/'/g, "\\'");
+
     card.innerHTML = `
-      <button class="bookmark-btn ${bookmarkClass}" onclick="toggleBookmark('${item.id}', event)">${bookmarkStar}</button>
+      <button class="bookmark-btn ${bookmarkClass}" onclick="toggleBookmark('${escapedKey}', event)">${bookmarkStar}</button>
       <div>
         <div class="card-header">
           <div class="card-header-top">

@@ -30,8 +30,15 @@ function populateTagDropdown() {
 
 // フィルターイベントの初期化（まとめ）
 function initFilters() {
-  document.getElementById('search-liver').addEventListener('input', filterData);
-  document.getElementById('search-tag').addEventListener('input', filterData);
+  const liverInput = document.getElementById('search-liver');
+  const tagInput = document.getElementById('search-tag');
+
+  liverInput.addEventListener('input', filterData);
+  liverInput.addEventListener('search', filterData); // ×ボタン用
+
+  tagInput.addEventListener('input', filterData);
+  tagInput.addEventListener('search', filterData);   // ×ボタン用
+
   document.getElementById('filter-type').addEventListener('change', filterData);
   document.getElementById('filter-status').addEventListener('change', filterData);
   document.getElementById('select-tag').addEventListener('change', (e) => {

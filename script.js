@@ -51,12 +51,24 @@ function clearTagFilter() {
   filterData();
 }
 
+function initFilters() {
+  document.getElementById('search-liver').addEventListener('input', filterData);
+  document.getElementById('search-tag').addEventListener('input', filterData);
+  document.getElementById('filter-type').addEventListener('change', filterData); // ★追加
+  document.getElementById('filter-status').addEventListener('change', filterData);
+  document.getElementById('select-tag').addEventListener('change', (e) => {
+    currentSelectedTag = e.target.value;
+    filterData();
+  });
+}
+
 function filterData() {
   const liverQuery = document.getElementById('search-liver').value.trim().toLowerCase();
   const tagQuery = document.getElementById('search-tag').value.trim().toLowerCase();
+  const type = document.getElementById('filter-type').value; // ★追加
   const status = document.getElementById('filter-status').value;
 
-  // バッジの表示切り替え
+  // バッジ表示制御
   const badgeContainer = document.getElementById('active-tag-badge');
   const badgeName = document.getElementById('active-tag-name');
   if (currentSelectedTag) {
@@ -68,11 +80,12 @@ function filterData() {
 
   const filtered = voiceData.filter(item => {
     const matchLiver = liverQuery === '' || item.liver.toLowerCase().includes(liverQuery);
+    const matchType = type === 'all' || item.type === type; // ★種別の絞り込み判定
     const matchStatus = status === 'all' || item.status === status;
     const matchTagInput = tagQuery === '' || item.tags.some(t => t.toLowerCase().includes(tagQuery));
     const matchTagSelect = currentSelectedTag === '' || item.tags.includes(currentSelectedTag);
 
-    return matchLiver && matchStatus && matchTagInput && matchTagSelect;
+    return matchLiver && matchType && matchStatus && matchTagInput && matchTagSelect;
   });
 
   renderCards(filtered);
@@ -96,7 +109,6 @@ function renderCards(data) {
     const reviewClass = hasReview ? 'review-btn' : 'review-btn disabled';
     const urlClass = hasUrl ? 'buy-btn-card' : 'buy-btn-card disabled';
 
-    // ★ EX（おまけ）バッジのテキストとクラスを判定
     let exBadgeHtml = '';
     if (item.exStatus === 'purchased') {
       exBadgeHtml = '<span class="ex-badge ex-purchased">EXあり（購入済）</span>';
@@ -109,7 +121,11 @@ function renderCards(data) {
     card.innerHTML = `
       <div>
         <div class="card-header">
-          <span class="status-badge ${item.status}">${item.status}</span>
+          <!-- ★販売状況の前に「種別」を表示 -->
+          <div>
+            <span class="type-badge">${item.type || ''}</span>
+            <span class="status-badge ${item.status}">${item.status}</span>
+          </div>
           ${exBadgeHtml}
         </div>
         <h3 class="card-title">${item.title}</h3>

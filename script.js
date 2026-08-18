@@ -140,7 +140,7 @@ function renderCards(data) {
       <div>
         <div class="card-header">
           <div class="card-header-top">
-            <span class="type-badge">${item.type || ''}</span>
+            <span class="type-badge ${item.type || ''}">${item.type || ''}</span>
             <span class="status-badge ${item.status}">${item.status}</span>
           </div>
           ${exBadgeHtml ? `<div class="card-header-bottom">${exBadgeHtml}</div>` : ''}

@@ -155,13 +155,37 @@ select:focus {
 }
 
 /* 各種バッジスタイル */
+/* --- ボイス種別バッジのベーススタイル --- */
 .type-badge {
+  display: inline-block;
+  padding: 2px 8px;
   font-size: 0.75rem;
-  padding: 4px 10px;
-  border-radius: 12px;
   font-weight: bold;
-  background-color: #f0f4f9;
-  color: #4a6fa5;
+  border-radius: 4px;
+  background-color: #e2e8f0; /* デフォルト背景 */
+  color: #475569;            /* デフォルト文字色 */
+}
+
+/* --- タイプ別の色指定 --- */
+/* ルート選択ボイス */
+.type-badge.ルート選択ボイス {
+  background-color: #f3e8ff;
+  color: #7e22ce;
+  border: 1px solid #d8b4fe;
+}
+
+/* セリフボイス */
+.type-badge.セリフボイス {
+  background-color: #ffedd5;
+  color: #c2410c;
+  border: 1px solid #fed7aa;
+}
+
+/* コンセプトボイス */
+.type-badge.コンセプトボイス {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
 }
 
 .status-badge {

@@ -48,6 +48,15 @@ function filterByTag(tagName) {
   filterData();
 }
 
+// カード内のライバー名をクリックした時の処理
+function filterByLiver(liverName) {
+  const liverInput = document.getElementById('search-liver');
+  if (liverInput) {
+    liverInput.value = liverName;
+    filterData();
+  }
+}
+
 // 選択中タグを解除する関数
 function clearTagFilter() {
   currentSelectedTag = '';

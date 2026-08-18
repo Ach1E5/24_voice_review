@@ -402,3 +402,14 @@ input[type="text"]:focus, select:focus {
   color: #4a6fa5;
   margin-right: 4px;
 }
+/* EXAあり（購入済）：濃いめピンク */
+.ex-badge.ex-purchased-exa {
+  background: #fcc2d7;
+  color: #a61e4d;
+}
+
+/* EXAあり（未購入）：濃いめオレンジ */
+.ex-badge.ex-unpurchased-exa {
+  background: #ffe8cc;
+  color: #d9480f;
+}

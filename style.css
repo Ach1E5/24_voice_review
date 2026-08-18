@@ -59,8 +59,7 @@ header h1 {
   margin-left: 8px;
 }
 
-/* 検索窓とセレクトボックス */
-/* 検索窓とセレクトボックス */
+/* 検索窓とセレクトボックス（searchタイプも確実に共通指定） */
 input[type="text"],
 input[type="search"],
 select {
@@ -69,12 +68,14 @@ select {
   border-radius: 30px;
   border: 2px solid #ffccd5;
   outline: none;
-  background: #fff;
+  background-color: #fff;
   font-family: inherit;
   font-size: 1rem;
   box-sizing: border-box;
   transition: all 0.2s ease;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 input[type="text"]:focus,
@@ -83,6 +84,17 @@ select:focus {
   border-color: var(--accent-color);
   box-shadow: 0 0 8px rgba(255, 111, 145, 0.3);
   background-color: #fff9fa;
+}
+
+/* Chrome / Safari / Edge などの×ボタンをピンクの可愛いバツにする */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff6f91'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>") no-repeat center;
+  cursor: pointer;
+  margin-left: 4px;
 }
 
 /* 選択中タグバッジエリア */
@@ -154,7 +166,7 @@ select:focus {
 
 .card-header-bottom {
   display: flex;
-  justify-content: flex-start; /* 左揃え */
+  justify-content: flex-start;
 }
 
 /* 各種バッジスタイル */
@@ -252,6 +264,14 @@ select:focus {
   font-size: 0.9rem;
   color: #888;
   margin-bottom: 10px;
+  cursor: pointer;
+  display: inline-block;
+  transition: opacity 0.2s;
+}
+
+.liver-name:hover {
+  opacity: 0.7;
+  text-decoration: underline;
 }
 
 .sweetness {
@@ -340,58 +360,6 @@ select:focus {
   transform: none !important;
 }
 
-/* ポップアップ（モーダル） */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-}
-
-.modal-content {
-  background: white;
-  padding: 30px;
-  border-radius: 24px;
-  max-width: 500px;
-  width: 90%;
-  position: relative;
-  max-height: 80vh;
-  overflow-y: auto;
-  border: 2px solid #ffe3e8;
-}
-
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #aaa;
-}
-
-.modal-text {
-  line-height: 1.6;
-  white-space: pre-wrap;
-}
-
-.buy-btn {
-  display: inline-block;
-  background: #ff4d6d;
-  color: white;
-  padding: 10px 22px;
-  border-radius: 20px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-top: 15px;
-  box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
-}
-
 /* フェードインアニメーション */
 @keyframes fadeIn {
   from {
@@ -406,32 +374,4 @@ select:focus {
 
 .card-fade-in {
   animation: fadeIn 0.4s ease-out forwards;
-}
-
-.liver-name {
-  cursor: pointer;
-  display: inline-block;
-  transition: opacity 0.2s;
-}
-
-.liver-name:hover {
-  opacity: 0.7;
-  text-decoration: underline;
-}
-
-/* --- searchタイプのブラウザデフォルト枠線を消して×ボタンを綺麗にする --- */
-input[type="search"] {
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-/* ×ボタンの見た目を整える */
-input[type="search"]::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 16px;
-  width: 16px;
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff6f91'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>") no-repeat center;
-  cursor: pointer;
-  margin-left: 4px;
 }

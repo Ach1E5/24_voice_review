@@ -16,10 +16,10 @@
 
   <main class="container">
     <!-- 絞り込みフィルターエリア -->
+    <section class="filter-section">
       <div class="filter-group">
         <label>ライバー名：</label>
         <input type="search" id="search-liver" placeholder="ライバー名を入力...">
-        <!-- ★追加：ライバー選択プルダウン -->
         <select id="select-liver" style="margin-top: 6px;">
           <option value="">すべてのライバー</option>
         </select>
@@ -30,7 +30,6 @@
         <input type="search" id="search-tag" placeholder="ジャンルを入力...">
       </div>
 
-      <!-- ★追加：タグ選択プルダウン -->
       <div class="filter-group">
         <label>タグ一覧：</label>
         <select id="select-tag">
@@ -46,8 +45,7 @@
           <option value="期間終了">期間終了</option>
         </select>
       </div>
-      
-      <!-- ボイス種別の絞り込み -->
+
       <div class="filter-group">
         <label>ボイス種別：</label>
         <select id="filter-type">
@@ -57,9 +55,9 @@
           <option value="ルート選択ボイス">ルート選択ボイス</option>
         </select>
       </div>
-      <!-- 並び替えグループ -->
+
       <div class="filter-group">
-        <label for="sort-order">並び替え</label>
+        <label for="sort-order">並び替え：</label>
         <select id="sort-order">
           <option value="shuffle">ランダム</option>
           <option value="sweetness-desc">糖度が高い順</option>
@@ -69,17 +67,16 @@
         </select>
       </div>
 
-<!-- ブックマーク切り替えグループ（ラベルをつけて他の要素と高さを揃える） -->
-<div class="filter-group">
-  <label>&nbsp;</label> <!-- 空ラベルで上の余白位置を他の入力欄と合わせる -->
-  <button id="btn-toggle-bookmark" class="btn-bookmark-filter" type="button" onclick="toggleBookmarkFilter()">☆ ブックマークのみ表示</button>
-</div>
-    <!-- ★追加：ブックマークのみ表示するフィルター -->
       <div class="filter-group">
+        <label>&nbsp;</label>
+        <button id="btn-toggle-bookmark" class="btn-bookmark-filter" type="button" onclick="toggleBookmarkFilter()">☆ ブックマークのみ表示</button>
+      </div>
+
+      <div class="filter-group">
+        <label>&nbsp;</label>
         <button id="btn-reset" class="btn-reset" type="button">条件をリセット</button>
       </div>
 
-      <!-- ★追加：選択中タグのバッジ表示エリア -->
       <div id="active-tag-badge" class="active-tag-container" style="display: none;">
         <span>選択中のタグ：</span>
         <span class="active-badge" onclick="clearTagFilter()">
@@ -97,4 +94,3 @@
   <button id="back-to-top" class="back-to-top" type="button" aria-label="ページのトップへ戻る">▲</button>
 </body>
 </html>
-

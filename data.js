@@ -3,9 +3,11 @@ const voiceData = [
     id: 1,
     title: "束縛ボイス",
     liver: "赤城ウェン",
+    type: "コンセプトボイス",
     status: "販売中",
     sweetness: "♥♥♥♡♡", 
     tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "purchased", // ★ "purchased" (購入済) / "unpurchased" (未購入) / "none" (なし)"purchased_exa" (EXAあり・購入済) または "unpurchased_exa" (EXAあり・未購入)
     review: "〇〇",
     url: "https://"
   },
@@ -13,9 +15,11 @@ const voiceData = [
     id: 2,
     title: "束縛ボイスvol.2",
     liver: "赤城ウェン",
+    type: "コンセプトボイス",
     status: "期間終了",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "purchased",
     review: "〇〇",
     url: ""
   }
@@ -24,9 +28,11 @@ const voiceData = [
     id: 3,
     title: "ヒーローボイス",
     liver: "赤城ウェン",
+    type: "コンセプトボイス",
     status: "期間終了",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "purchased",
     review: "〇〇",
     url: ""
   }
@@ -35,9 +41,11 @@ const voiceData = [
     id: 4,
     title: "ほろ酔いボイスvol.2",
     liver: "赤城ウェン",
+    type: "コンセプトボイス",
     status: "期間終了",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "purchased",
     review: "〇〇",
     url: ""
   }
@@ -46,9 +54,11 @@ const voiceData = [
     id: 5,
     title: "家族パロディボイスvol.2",
     liver: "赤城ウェン",
+    type: "コンセプトボイス",
     status: "期間終了",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "purchased",
     review: "〇〇",
     url: ""
   }
@@ -57,9 +67,11 @@ const voiceData = [
     id: 6,
     title: "がんばらないボイス",
     liver: "赤城ウェン",
+    type: "コンセプトボイス",
     status: "期間終了",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "purchased",
     review: "〇〇",
     url: ""
   }
@@ -68,9 +80,11 @@ const voiceData = [
     id: 7,
     title: "わがままボイス",
     liver: "赤城ウェン",
+    type: "コンセプトボイス",
     status: "期間終了",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "purchased",
     review: "〇〇",
     url: ""
   }
@@ -79,9 +93,11 @@ const voiceData = [
     id: 8,
     title: "ツンデレボイス",
     liver: "赤城ウェン",
+    type: "コンセプトボイス",
     status: "期間終了",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "purchased",
     review: "〇〇",
     url: ""
   }
@@ -90,9 +106,11 @@ const voiceData = [
     id: 9,
     title: "ジューンブライドボイス2024",
     liver: "伊波ライ",
+    type: "コンセプトボイス",
     status: "期間終了",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "purchased",
     review: "〇〇",
     url: ""
   }
@@ -101,9 +119,11 @@ const voiceData = [
     id: 10,
     title: "ホワイトデーボイス2024",
     liver: "伊波ライ",
+    type: "コンセプトボイス",
     status: "期間終了",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "purchased",
     review: "〇〇",
     url: ""
   }

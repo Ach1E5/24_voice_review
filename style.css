@@ -33,7 +33,9 @@ header h1 {
   padding: 0 15px;
 }
 
-/* フィルターエリア */
+/* ==========================================
+   フィルターエリア
+   ========================================== */
 .filter-section {
   background: var(--card-bg);
   padding: 24px;
@@ -63,7 +65,7 @@ header h1 {
 input[type="text"],
 input[type="search"],
 select {
-  -webkit-appearance: none; /* ブラウザの四角い見た目をリセット */
+  -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   width: 100%;
@@ -87,7 +89,7 @@ select:focus {
   background-color: #fff9fa;
 }
 
-/* Chrome / Safari / Edge などの×ボタンをピンクの可愛いバツにする */
+/* Chrome / Safari / Edge などの×ボタンをピンクにする */
 input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
   appearance: none;
@@ -96,6 +98,40 @@ input[type="search"]::-webkit-search-cancel-button {
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff6f91'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>") no-repeat center;
   cursor: pointer;
   margin-left: 4px;
+}
+
+/* 「★ ブックマークのみ表示」切り替えボタン */
+.bookmark-filter-btn,
+.btn-bookmark-filter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 2px solid #ffccd5;
+  background-color: #fff;
+  color: var(--accent-color);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 6px rgba(255, 111, 145, 0.1);
+}
+
+.bookmark-filter-btn:hover,
+.btn-bookmark-filter:hover {
+  background-color: #fff0f3;
+  transform: translateY(-1px);
+}
+
+.bookmark-filter-btn.active,
+.btn-bookmark-filter.active {
+  background-color: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 10px rgba(255, 111, 145, 0.3);
 }
 
 /* 選択中タグバッジエリア */
@@ -125,7 +161,9 @@ input[type="search"]::-webkit-search-cancel-button {
   transform: scale(1.05);
 }
 
-/* カード一覧 grid */
+/* ==========================================
+   カードレイアウト
+   ========================================== */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -143,7 +181,7 @@ input[type="search"]::-webkit-search-cancel-button {
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid #ffe3e8;
-  position: relative;
+  position: relative !important; /* ★ボタン位置調整の基準 */
 }
 
 .card:hover {
@@ -151,12 +189,41 @@ input[type="search"]::-webkit-search-cancel-button {
   box-shadow: 0 10px 20px rgba(255, 111, 145, 0.15);
 }
 
-/* ★カードヘッダーエリア（上段・下段の2段構成） */
+/* 右上ブックマークボタン */
+.bookmark-btn {
+  position: absolute !important;
+  top: 15px !important;
+  right: 15px !important;
+  background: transparent !important;
+  border: none !important;
+  font-size: 1.5rem !important;
+  color: #ccc;
+  cursor: pointer !important;
+  padding: 4px !important;
+  line-height: 1 !important;
+  transition: transform 0.2s ease, color 0.2s ease;
+  pointer-events: auto !important;
+  z-index: 50 !important; /* 他の要素に埋もれないように一番前面へ */
+}
+
+.bookmark-btn:hover {
+  transform: scale(1.25);
+  color: #ff6f91;
+}
+
+/* ブックマーク済みの時の色 */
+.bookmark-btn.bookmarked {
+  color: #ff4d6d;
+  text-shadow: 0 0 6px rgba(255, 77, 109, 0.3);
+}
+
+/* カードヘッダーエリア */
 .card-header {
   display: flex;
   flex-direction: column;
   gap: 6px;
   margin-bottom: 8px;
+  padding-right: 30px; /* ★ボタンと被らないように右側に余白を確保 */
 }
 
 .card-header-top {
@@ -172,7 +239,6 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 /* 各種バッジスタイル */
-/* --- ボイス種別バッジ --- */
 .type-badge {
   display: inline-block;
   padding: 2px 8px;
@@ -181,21 +247,18 @@ input[type="search"]::-webkit-search-cancel-button {
   border-radius: 4px;
 }
 
-/* ルート選択ボイス */
 .type-badge.type-route {
   background-color: #f3e8ff;
   color: #7e22ce;
   border: 1px solid #d8b4fe;
 }
 
-/* セリフボイス */
 .type-badge.type-dialogue {
   background-color: #ffedd5;
   color: #c2410c;
   border: 1px solid #fed7aa;
 }
 
-/* コンセプトボイス */
 .type-badge.type-concept {
   background-color: #e0f2fe;
   color: #0369a1;
@@ -218,31 +281,6 @@ input[type="search"]::-webkit-search-cancel-button {
 .status-badge.期間終了 {
   background: #ffe3e3;
   color: #c53030;
-}
-
-/* ブックマークボタン（右上配置） */
-.bookmark-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: none;
-  border: none;
-  font-size: 1.4rem;
-  color: #ccc;
-  cursor: pointer;
-  padding: 4px;
-  line-height: 1;
-  transition: transform 0.1s ease, color 0.2s ease;
-  z-index: 10;
-}
-
-.bookmark-btn:hover {
-  transform: scale(1.2);
-}
-
-/* ブックマーク済みの時の色 */
-.bookmark-btn.bookmarked {
-  color: #ffb703; /* 好みの黄色・ゴールドに変更OK */
 }
 
 /* EXバッジ共通 */
@@ -280,7 +318,7 @@ input[type="search"]::-webkit-search-cancel-button {
   color: #868e96;
 }
 
-/* カード内の文章コンテンツ */
+/* カード内のテキストコンテンツ */
 .card-title {
   font-size: 1.1rem;
   margin: 8px 0 4px 0;
@@ -352,7 +390,6 @@ input[type="search"]::-webkit-search-cancel-button {
   transition: all 0.2s ease;
 }
 
-/* 上のボタン：感想を読む */
 .review-btn {
   background-color: #ff9ebb;
   color: white;
@@ -364,7 +401,6 @@ input[type="search"]::-webkit-search-cancel-button {
   transform: translateY(-2px);
 }
 
-/* 下のボタン：公式販売ページ */
 .buy-btn-card {
   background-color: #9d94e8;
   color: white;
@@ -401,57 +437,4 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .card-fade-in {
   animation: fadeIn 0.4s ease-out forwards;
-}
-
-/* ブックマーク切り替えボタン */
-.bookmark-filter-btn {
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 2px solid #ffccd5;
-  background-color: #fff;
-  color: var(--accent-color);
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: inherit;
-}
-
-.bookmark-filter-btn:hover {
-  background-color: #fff0f3;
-}
-
-.bookmark-filter-btn.active {
-  background-color: var(--accent-color);
-  color: white;
-  border-color: var(--accent-color);
-}
-
-/* カード内の★ボタン（右上配置） */
-.card {
-  position: relative;
-}
-
-.bookmark-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 1.4rem;
-  color: #ccc;
-  cursor: pointer;
-  transition: transform 0.2s, color 0.2s;
-  padding: 0;
-  line-height: 1;
-  pointer-events: auto;
-  z-index: 20;
-}
-
-.bookmark-btn:hover {
-  transform: scale(1.2);
-  color: #ff6f91;
-}
-
-.bookmark-btn.bookmarked {
-  color: #ff4d6d;
 }

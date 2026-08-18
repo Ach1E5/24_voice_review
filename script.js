@@ -87,12 +87,19 @@ function initFilters() {
     });
   }
 
-  document.getElementById('filter-type').addEventListener('change', filterData);
-  document.getElementById('filter-status').addEventListener('change', filterData);
-  document.getElementById('select-tag').addEventListener('change', (e) => {
-    currentSelectedTag = e.target.value;
-    filterData();
-  });
+  const filterType = document.getElementById('filter-type');
+  if (filterType) filterType.addEventListener('change', filterData);
+
+  const filterStatus = document.getElementById('filter-status');
+  if (filterStatus) filterStatus.addEventListener('change', filterData);
+
+  const selectTag = document.getElementById('select-tag');
+  if (selectTag) {
+    selectTag.addEventListener('change', (e) => {
+      currentSelectedTag = e.target.value;
+      filterData();
+    });
+  }
 }
 
 // カード内のタグをクリックした時の処理
@@ -120,9 +127,8 @@ function clearTagFilter() {
   filterData();
 }
 
-// ブックマークのON/OFF切り替え（キーで判定）
-function toggleBookmark(key, event) {
-  event.stopPropagation();
+// ブックマークのON/OFF切り替え
+function toggleBookmark(key) {
   const index = bookmarkedKeys.indexOf(key);
   if (index > -1) {
     bookmarkedKeys.splice(index, 1);
@@ -145,10 +151,15 @@ function toggleBookmarkFilter() {
 }
 
 function filterData() {
-  const liverQuery = document.getElementById('search-liver').value.trim().toLowerCase();
-  const tagQuery = document.getElementById('search-tag').value.trim().toLowerCase();
-  const type = document.getElementById('filter-type').value;
-  const status = document.getElementById('filter-status').value;
+  const liverInput = document.getElementById('search-liver');
+  const tagInput = document.getElementById('search-tag');
+  const filterType = document.getElementById('filter-type');
+  const filterStatus = document.getElementById('filter-status');
+
+  const liverQuery = liverInput ? liverInput.value.trim().toLowerCase() : '';
+  const tagQuery = tagInput ? tagInput.value.trim().toLowerCase() : '';
+  const type = filterType ? filterType.value : 'all';
+  const status = filterStatus ? filterStatus.value : 'all';
 
   // バッジ表示制御
   const badgeContainer = document.getElementById('active-tag-badge');
@@ -164,11 +175,11 @@ function filterData() {
 
   const filtered = voiceData.filter(item => {
     const itemKey = getItemKey(item);
-    const matchLiver = liverQuery === '' || item.liver.toLowerCase().includes(liverQuery);
+    const matchLiver = liverQuery === '' || (item.liver && item.liver.toLowerCase().includes(liverQuery));
     const matchType = type === 'all' || item.type === type;
     const matchStatus = status === 'all' || item.status === status;
-    const matchTagInput = tagQuery === '' || item.tags.some(t => t.toLowerCase().includes(tagQuery));
-    const matchTagSelect = currentSelectedTag === '' || item.tags.includes(currentSelectedTag);
+    const matchTagInput = tagQuery === '' || (item.tags && item.tags.some(t => t.toLowerCase().includes(tagQuery)));
+    const matchTagSelect = currentSelectedTag === '' || (item.tags && item.tags.includes(currentSelectedTag));
     const matchBookmark = !showOnlyBookmarks || bookmarkedKeys.includes(itemKey);
 
     return matchLiver && matchType && matchStatus && matchTagInput && matchTagSelect && matchBookmark;
@@ -179,6 +190,7 @@ function filterData() {
 
 function renderCards(data) {
   const list = document.getElementById('card-list');
+  if (!list) return;
   list.innerHTML = '';
 
   data.forEach((item, index) => {
@@ -243,11 +255,8 @@ function renderCards(data) {
       typeClass = 'type-concept';
     }
 
-    // シングルクォーテーションのエスケープ処理
-    const escapedKey = itemKey.replace(/'/g, "\\'");
-
     card.innerHTML = `
-      <button class="bookmark-btn ${bookmarkClass}" onclick="toggleBookmark('${escapedKey}', event)">${bookmarkStar}</button>
+      <button class="bookmark-btn ${bookmarkClass}" type="button">${bookmarkStar}</button>
       <div>
         <div class="card-header">
           <div class="card-header-top">
@@ -260,7 +269,7 @@ function renderCards(data) {
         <div class="liver-name" style="cursor: pointer; display: inline-block;">👤 ${item.liver}</div>
         <div class="sweetness">糖度: ${item.sweetness}</div>
         <div class="tags">
-          ${item.tags.map(t => `<span class="tag" onclick="filterByTag('${t.replace(/'/g, "\\'")}')">#${t}</span>`).join('')}
+          ${item.tags ? item.tags.map(t => `<span class="tag" onclick="filterByTag('${t.replace(/'/g, "\\'")}')">#${t}</span>`).join('') : ''}
         </div>
       </div>
       <div class="card-buttons">
@@ -268,6 +277,16 @@ function renderCards(data) {
         <a ${urlAttr} class="${urlClass}">公式販売ページ</a>
       </div>
     `;
+
+    // ブックマークボタンのクリックイベントを設定
+    const bookmarkBtn = card.querySelector('.bookmark-btn');
+    if (bookmarkBtn) {
+      bookmarkBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        toggleBookmark(itemKey);
+      });
+    }
 
     // ライバー名要素にイベントを設定
     const liverElement = card.querySelector('.liver-name');

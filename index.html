@@ -16,11 +16,16 @@
 
   <main class="container">
     <!-- 絞り込みフィルターエリア -->
-    <section class="filter-section">
       <div class="filter-group">
         <label>ライバー名：</label>
         <input type="search" id="search-liver" placeholder="ライバー名を入力...">
+        <!-- ★追加：ライバー選択プルダウン -->
+        <select id="select-liver" style="margin-top: 6px;">
+          <option value="">すべてのライバー</option>
+        </select>
       </div>
+      
+     
 
       <div class="filter-group">
         <label>ジャンル：</label>
@@ -42,6 +47,14 @@
           <option value="販売中">販売中</option>
           <option value="期間終了">期間終了</option>
         </select>
+      </div>
+    
+     <!-- ★追加：ブックマークのみ表示するフィルター -->
+      <div class="filter-group">
+        <label>表示切替：</label>
+        <button id="btn-toggle-bookmark" class="bookmark-filter-btn" onclick="toggleBookmarkFilter()">
+          ★ ブックマークのみ表示
+        </button>
       </div>
       
       <!-- ボイス種別の絞り込み -->

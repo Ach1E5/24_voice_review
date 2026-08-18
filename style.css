@@ -168,21 +168,21 @@ select:focus {
 
 /* --- タイプ別の色指定 --- */
 /* ルート選択ボイス */
-.type-badge.ルート選択ボイス {
+.type-badge.type-route {
   background-color: #f3e8ff;
   color: #7e22ce;
   border: 1px solid #d8b4fe;
 }
 
 /* セリフボイス */
-.type-badge.セリフボイス {
+.type-badge.type-dialogue {
   background-color: #ffedd5;
   color: #c2410c;
   border: 1px solid #fed7aa;
 }
 
 /* コンセプトボイス */
-.type-badge.コンセプトボイス {
+.type-badge.type-concept {
   background-color: #e0f2fe;
   color: #0369a1;
   border: 1px solid #bae6fd;

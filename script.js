@@ -109,6 +109,7 @@ function renderCards(data) {
     const reviewClass = hasReview ? 'review-btn' : 'review-btn disabled';
     const urlClass = hasUrl ? 'buy-btn-card' : 'buy-btn-card disabled';
 
+    // EXバッジの生成
     let exBadgeHtml = '';
     if (item.exStatus === 'purchased') {
       exBadgeHtml = '<span class="ex-badge ex-purchased">EXあり（購入済）</span>';
@@ -121,6 +122,8 @@ function renderCards(data) {
     } else if (item.exStatus === 'none') {
       exBadgeHtml = '<span class="ex-badge ex-none">EXなし</span>';
     }
+
+    // ★ 1段目（card-header-top）と2段目（card-header-bottom）に分けたHTML
     card.innerHTML = `
       <div>
         <div class="card-header">

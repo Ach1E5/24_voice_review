@@ -376,3 +376,54 @@ input[type="search"]::-webkit-search-cancel-button {
 .card-fade-in {
   animation: fadeIn 0.4s ease-out forwards;
 }
+
+/* ブックマーク切り替えボタン */
+.bookmark-filter-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 2px solid #ffccd5;
+  background-color: #fff;
+  color: var(--accent-color);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.bookmark-filter-btn:hover {
+  background-color: #fff0f3;
+}
+
+.bookmark-filter-btn.active {
+  background-color: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+/* カード内の★ボタン（右上に配置する場合） */
+.card {
+  position: relative; /* 位置調整用 */
+}
+
+.bookmark-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.bookmark-btn:hover {
+  transform: scale(1.2);
+  color: #ff6f91;
+}
+
+.bookmark-btn.bookmarked {
+  color: #ff4d6d;
+}

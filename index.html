@@ -57,18 +57,24 @@
           <option value="ルート選択ボイス">ルート選択ボイス</option>
         </select>
       </div>
+      <!-- 並び替えグループ -->
       <div class="filter-group">
-    <label for="sort-order">並び替え</label>
-    <select id="sort-order">
-      <option value="shuffle">ランダム</option>
-      <option value="sweetness-desc">糖度が高い順</option>
-      <option value="sweetness-asc">糖度が低い順</option>
-      <option value="liver-asc">ライバー名順</option>
-      <option value="title-asc">タイトル順</option>
-    </select>
-  </div>
+        <label for="sort-order">並び替え</label>
+        <select id="sort-order">
+          <option value="shuffle">ランダム</option>
+          <option value="sweetness-desc">糖度が高い順</option>
+          <option value="sweetness-asc">糖度が低い順</option>
+          <option value="liver-asc">ライバー名順</option>
+          <option value="title-asc">タイトル順</option>
+        </select>
+      </div>
+
+<!-- ブックマーク切り替えグループ（ラベルをつけて他の要素と高さを揃える） -->
+<div class="filter-group">
+  <label>&nbsp;</label> <!-- 空ラベルで上の余白位置を他の入力欄と合わせる -->
+  <button id="btn-toggle-bookmark" class="btn-bookmark-filter" type="button" onclick="toggleBookmarkFilter()">☆ ブックマークのみ表示</button>
+</div>
     <!-- ★追加：ブックマークのみ表示するフィルター -->
-    
       <div class="filter-group">
         <button id="btn-toggle-bookmark" class="btn-bookmark-filter" type="button" onclick="toggleBookmarkFilter()">
           ☆ ブックマークのみ表示

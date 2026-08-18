@@ -1,29 +1,3 @@
-// ★ ここにデータ追加・編集
-const voiceData = [
-  {
-    id: 1,
-    title: "束縛ボイス",
-    liver: "赤城ウェン",
-    status: "販売中",
-    sweetness: "♥♥♥♡♡", 
-    tags: ["嫉妬", "かわいい", "友人"],
-    review: "〇〇",
-    url: "https://"
-  },
-  {
-    id: 2,
-    title: "束縛ボイスvol.2",
-    liver: "赤城ウェン",
-    status: "期間終了",
-    sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
-    review: "〇〇",
-    url: ""
-  }
-];
-
-let currentSelectedTag = '';
-
 // 初期化処理
 function init() {
   populateTagDropdown();
@@ -122,10 +96,21 @@ function renderCards(data) {
     const reviewClass = hasReview ? 'review-btn' : 'review-btn disabled';
     const urlClass = hasUrl ? 'buy-btn-card' : 'buy-btn-card disabled';
 
+    // ★ EX（おまけ）バッジのテキストとクラスを判定
+    let exBadgeHtml = '';
+    if (item.exStatus === 'purchased') {
+      exBadgeHtml = '<span class="ex-badge ex-purchased">EXあり（購入済）</span>';
+    } else if (item.exStatus === 'unpurchased') {
+      exBadgeHtml = '<span class="ex-badge ex-unpurchased">EXあり（未購入）</span>';
+    } else if (item.exStatus === 'none') {
+      exBadgeHtml = '<span class="ex-badge ex-none">EXなし</span>';
+    }
+
     card.innerHTML = `
       <div>
         <div class="card-header">
           <span class="status-badge ${item.status}">${item.status}</span>
+          ${exBadgeHtml}
         </div>
         <h3 class="card-title">${item.title}</h3>
         <div class="liver-name">👤 ${item.liver}</div>

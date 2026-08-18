@@ -124,12 +124,11 @@ function renderCards(data) {
     card.innerHTML = `
       <div>
         <div class="card-header">
-          <!-- ★販売状況の前に「種別」を表示 -->
-          <div>
+          <div class="card-header-top">
             <span class="type-badge">${item.type || ''}</span>
             <span class="status-badge ${item.status}">${item.status}</span>
           </div>
-          ${exBadgeHtml}
+          ${exBadgeHtml ? `<div class="card-header-bottom">${exBadgeHtml}</div>` : ''}
         </div>
         <h3 class="card-title">${item.title}</h3>
         <div class="liver-name">👤 ${item.liver}</div>

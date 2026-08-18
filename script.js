@@ -1,3 +1,6 @@
+// グローバル変数の宣言
+let currentSelectedTag = '';
+
 // 初期化処理
 function init() {
   populateTagDropdown();
@@ -25,9 +28,11 @@ function populateTagDropdown() {
   });
 }
 
+// フィルターイベントの初期化（まとめ）
 function initFilters() {
   document.getElementById('search-liver').addEventListener('input', filterData);
   document.getElementById('search-tag').addEventListener('input', filterData);
+  document.getElementById('filter-type').addEventListener('change', filterData);
   document.getElementById('filter-status').addEventListener('change', filterData);
   document.getElementById('select-tag').addEventListener('change', (e) => {
     currentSelectedTag = e.target.value;
@@ -51,21 +56,10 @@ function clearTagFilter() {
   filterData();
 }
 
-function initFilters() {
-  document.getElementById('search-liver').addEventListener('input', filterData);
-  document.getElementById('search-tag').addEventListener('input', filterData);
-  document.getElementById('filter-type').addEventListener('change', filterData); // ★追加
-  document.getElementById('filter-status').addEventListener('change', filterData);
-  document.getElementById('select-tag').addEventListener('change', (e) => {
-    currentSelectedTag = e.target.value;
-    filterData();
-  });
-}
-
 function filterData() {
   const liverQuery = document.getElementById('search-liver').value.trim().toLowerCase();
   const tagQuery = document.getElementById('search-tag').value.trim().toLowerCase();
-  const type = document.getElementById('filter-type').value; // ★追加
+  const type = document.getElementById('filter-type').value;
   const status = document.getElementById('filter-status').value;
 
   // バッジ表示制御
@@ -80,7 +74,7 @@ function filterData() {
 
   const filtered = voiceData.filter(item => {
     const matchLiver = liverQuery === '' || item.liver.toLowerCase().includes(liverQuery);
-    const matchType = type === 'all' || item.type === type; // ★種別の絞り込み判定
+    const matchType = type === 'all' || item.type === type;
     const matchStatus = status === 'all' || item.status === status;
     const matchTagInput = tagQuery === '' || item.tags.some(t => t.toLowerCase().includes(tagQuery));
     const matchTagSelect = currentSelectedTag === '' || item.tags.includes(currentSelectedTag);
@@ -120,7 +114,7 @@ function renderCards(data) {
     let exBadgeHtml = '';
     switch (item.exStatus) {
       case 'ex_purchased':
-      case 'purchased': // 互換用
+      case 'purchased':
         exBadgeHtml = badgeExP;
         break;
       case 'ex_p_exa_u':
@@ -130,11 +124,11 @@ function renderCards(data) {
         exBadgeHtml = `${badgeExU}${badgeExaP}`;
         break;
       case 'ex_p_exa_p':
-      case 'purchased_exa': // 互換用
+      case 'purchased_exa':
         exBadgeHtml = `${badgeExP}${badgeExaP}`;
         break;
       case 'ex_u_exa_u':
-      case 'unpurchased_exa': // 互換用
+      case 'unpurchased_exa':
         exBadgeHtml = `${badgeExU}${badgeExaU}`;
         break;
       case 'none':
@@ -166,5 +160,6 @@ function renderCards(data) {
     list.appendChild(card);
   });
 }
+
 // ページ読み込み時に実行
 document.addEventListener('DOMContentLoaded', init);

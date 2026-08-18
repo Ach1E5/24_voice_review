@@ -22,7 +22,7 @@ const voiceData = [
     exStatus: "purchased",
     review: "〇〇",
     url: ""
-  }
+  },
  {
     id: 3,
     title: "ヒーローボイス",
@@ -34,7 +34,7 @@ const voiceData = [
     exStatus: "purchased",
     review: "〇〇",
     url: ""
-  }
+  },
  {
     id: 4,
     title: "ほろ酔いボイスvol.2",
@@ -46,7 +46,7 @@ const voiceData = [
     exStatus: "purchased",
     review: "〇〇",
     url: ""
-  }
+  },
  {
     id: 5,
     title: "家族パロディボイスvol.2",
@@ -58,7 +58,7 @@ const voiceData = [
     exStatus: "purchased",
     review: "〇〇",
     url: ""
-  }
+  },
  {
     id: 6,
     title: "がんばらないボイス",
@@ -70,7 +70,7 @@ const voiceData = [
     exStatus: "purchased",
     review: "〇〇",
     url: ""
-  }
+  },
  {
     id: 7,
     title: "わがままボイス",
@@ -82,7 +82,7 @@ const voiceData = [
     exStatus: "purchased",
     review: "〇〇",
     url: ""
-  }
+  },
  {
     id: 8,
     title: "ツンデレボイス",
@@ -94,7 +94,7 @@ const voiceData = [
     exStatus: "purchased",
     review: "〇〇",
     url: ""
-  }
+  },
  {
     id: 9,
     title: "ジューンブライドボイス2024",
@@ -106,7 +106,7 @@ const voiceData = [
     exStatus: "purchased",
     review: "〇〇",
     url: ""
-  }
+  },
  {
     id: 10,
     title: "ホワイトデーボイス2024",

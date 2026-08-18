@@ -155,7 +155,7 @@ select:focus {
 }
 
 /* 各種バッジスタイル */
-/* --- ボイス種別バッジのベーススタイル --- */
+/* --- ボイス種別バッジ --- */
 .type-badge {
   display: inline-block;
   padding: 2px 8px;
@@ -164,7 +164,6 @@ select:focus {
   border-radius: 4px;
 }
 
-/* --- タイプ別の色指定 --- */
 /* ルート選択ボイス */
 .type-badge.type-route {
   background-color: #f3e8ff;

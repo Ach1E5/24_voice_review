@@ -109,26 +109,37 @@ function renderCards(data) {
     const reviewClass = hasReview ? 'review-btn' : 'review-btn disabled';
     const urlClass = hasUrl ? 'buy-btn-card' : 'buy-btn-card disabled';
 
-    // EXバッジの生成（複数並べられる処理）
+    // バッジ生成のパーツ
+    const badgeExP = '<span class="ex-badge ex-purchased">EXあり（購入済）</span>';
+    const badgeExU = '<span class="ex-badge ex-unpurchased">EXあり（未購入）</span>';
+    const badgeExaP = '<span class="ex-badge ex-purchased-exa">EXAあり（購入済）</span>';
+    const badgeExaU = '<span class="ex-badge ex-unpurchased-exa">EXAあり（未購入）</span>';
+    const badgeNone = '<span class="ex-badge ex-none">EXなし</span>';
+
+    // 全パターン分岐
     let exBadgeHtml = '';
-    if (item.exStatus === 'purchased') {
-      exBadgeHtml = '<span class="ex-badge ex-purchased">EXあり（購入済）</span>';
-    } else if (item.exStatus === 'unpurchased') {
-      exBadgeHtml = '<span class="ex-badge ex-unpurchased">EXあり（未購入）</span>';
-    } else if (item.exStatus === 'purchased_exa') {
-      // EX(購入済) と EXA(購入済) の2つを並べる
-      exBadgeHtml = `
-        <span class="ex-badge ex-purchased">EXあり（購入済）</span>
-        <span class="ex-badge ex-purchased-exa">EXAあり（購入済）</span>
-      `;
-    } else if (item.exStatus === 'unpurchased_exa') {
-      // EX(未購入) と EXA(未購入) の2つを並べる
-      exBadgeHtml = `
-        <span class="ex-badge ex-unpurchased">EXあり（未購入）</span>
-        <span class="ex-badge ex-unpurchased-exa">EXAあり（未購入）</span>
-      `;
-    } else if (item.exStatus === 'none') {
-      exBadgeHtml = '<span class="ex-badge ex-none">EXなし</span>';
+    switch (item.exStatus) {
+      case 'ex_purchased':
+      case 'purchased': // 互換用
+        exBadgeHtml = badgeExP;
+        break;
+      case 'ex_p_exa_u':
+        exBadgeHtml = `${badgeExP}${badgeExaU}`;
+        break;
+      case 'ex_u_exa_p':
+        exBadgeHtml = `${badgeExU}${badgeExaP}`;
+        break;
+      case 'ex_p_exa_p':
+      case 'purchased_exa': // 互換用
+        exBadgeHtml = `${badgeExP}${badgeExaP}`;
+        break;
+      case 'ex_u_exa_u':
+      case 'unpurchased_exa': // 互換用
+        exBadgeHtml = `${badgeExU}${badgeExaU}`;
+        break;
+      case 'none':
+        exBadgeHtml = badgeNone;
+        break;
     }
 
     card.innerHTML = `

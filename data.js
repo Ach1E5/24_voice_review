@@ -5,7 +5,7 @@ const voiceData = [
     liver: "赤城ウェン",
     type: "コンセプトボイス",
     status: "販売中",
-    sweetness: "♥♥♥♡♡", 
+    sweetness: "♥♥♥♡♡",
     tags: ["嫉妬", "かわいい", "友人"],
     exStatus: "purchased",
     review: "〇〇",

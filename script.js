@@ -145,7 +145,7 @@ function renderCards(data) {
         break;
     }
 
-    // ★ここでクラス名を判定
+    // タイプに応じたCSSクラス名の判定
     let typeClass = '';
     if (item.type === 'ルート選択ボイス') {
       typeClass = 'type-route';
@@ -165,7 +165,7 @@ function renderCards(data) {
           ${exBadgeHtml ? `<div class="card-header-bottom">${exBadgeHtml}</div>` : ''}
         </div>
         <h3 class="card-title">${item.title}</h3>
-        <div class="liver-name" onclick="filterByLiver('${item.liver}')" style="cursor: pointer;">👤 ${item.liver}</div>
+        <div class="liver-name">👤 ${item.liver}</div>
         <div class="sweetness">糖度: ${item.sweetness}</div>
         <div class="tags">
           ${item.tags.map(t => `<span class="tag" onclick="filterByTag('${t}')">#${t}</span>`).join('')}
@@ -176,6 +176,15 @@ function renderCards(data) {
         <a ${urlAttr} class="${urlClass}">公式販売ページ</a>
       </div>
     `;
+
+    // ライバー名要素に安全にクリックイベントを付与
+    const liverElement = card.querySelector('.liver-name');
+    if (liverElement) {
+      liverElement.addEventListener('click', () => {
+        filterByLiver(item.liver);
+      });
+    }
+
     list.appendChild(card);
   });
 }

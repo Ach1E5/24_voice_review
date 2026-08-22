@@ -364,7 +364,10 @@ function renderCards(data) {
         </div>
         <h3 class="card-title">${item.title}</h3>
         <div class="liver-name">👤 ${item.liver}</div>
-        <div class="sweetness">糖度: ${item.sweetness}</div>
+        <div class="sweetness">
+          <span class="sweetness-label">糖度：</span>
+          <span class="sweetness-stars">${item.sweetness}</span>
+        </div>
         <div class="tags">
           ${item.tags ? item.tags.map(t => `<span class="tag" onclick="filterByTag('${t.replace(/'/g, "\\'")}')">#${t}</span>`).join('') : ''}
         </div>

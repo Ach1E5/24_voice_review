@@ -13,6 +13,8 @@ const voiceData = [
     id: 1,
     title: "束縛ボイス",
     liver: "赤城ウェン",
+    titleKana: "そくばくぼいす",
+    liverKana: "あかぎうぇん",
     type: "コンセプトボイス",
     status: "販売終了",
     sweetness: "♥♥♥♡♡",

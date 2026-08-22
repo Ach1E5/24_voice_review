@@ -591,8 +591,8 @@ const voiceData = [
     liver: "緋八マナ",
     type: "コンセプトボイス",
     status: "販売中",
-    sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    sweetness: "♥♥♥♡♡",
+    tags: ["嫉妬", "かわいい", "恋人"],
     exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
@@ -603,8 +603,8 @@ const voiceData = [
     liver: "緋八マナ",
     type: "コンセプトボイス",
     status: "販売中",
-    sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    sweetness: "♥♥♡♡♡",
+    tags: ["嫉妬", "かわいい", "恋人"],
     exStatus: "ex_purchased",
     review: "〇〇",
     url: ""

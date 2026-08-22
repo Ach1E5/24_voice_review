@@ -752,5 +752,53 @@ const voiceData = [
     exStatus: "none",
     review: "〇〇",
     url: ""
+  },
+   {
+    id: 63,
+    title: "怪奇ボイス",
+    liver: "伊波ライ",
+    type: "コンセプトボイス",
+    status: "販売中",
+    sweetness: "♥♥♥♥♡",
+    tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "ex_purchased",
+    review: "〇〇",
+    url: ""
+  },
+   {
+    id: 64,
+    title: "兄弟・姉妹ボイス",
+    liver: "伊波ライ",
+    type: "セリフボイス",
+    status: "販売中",
+    sweetness: "♥♥♥♥♡",
+    tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "none",
+    review: "〇〇",
+    url: ""
+  },
+  {
+    id: 65,
+    title: "怪奇ボイス",
+    liver: "緋八マナ",
+    type: "コンセプトボイス",
+    status: "販売中",
+    sweetness: "♥♥♥♥♡",
+    tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "ex_purchased",
+    review: "〇〇",
+    url: ""
+  },
+  {
+    id: 66,
+    title: "怪奇ボイス",
+    liver: "星導ショウ",
+    type: "コンセプトボイス",
+    status: "販売中",
+    sweetness: "♥♥♥♥♡",
+    tags: ["嫉妬", "かわいい", "友人"],
+    exStatus: "ex_purchased",
+    review: "〇〇",
+    url: ""
   }
 ];

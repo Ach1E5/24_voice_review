@@ -348,7 +348,7 @@ input[type="search"]::-webkit-search-cancel-button {
 .sweetness-stars {
   font-family: 'M PLUS Rounded 1c', sans-serif !important;
   font-size: 1.05rem;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   color: #ff4d6d;
 }
 

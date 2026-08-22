@@ -39,8 +39,8 @@ const voiceData = [
     liver: "赤城ウェン",
     type: "コンセプトボイス",
     status: "販売中",
-    sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    sweetness: "♥♥♥♡♡",
+    tags: ["嫉妬", "かわいい", "恋人"],
     exStatus: "ex_purchased",
     review: "〇〇",
     url: "https://shop.nijisanji.jp/dig-01489.html"
@@ -51,8 +51,8 @@ const voiceData = [
     liver: "赤城ウェン",
     type: "コンセプトボイス",
     status: "期間終了",
-    sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    sweetness: "♥♥♡♡♡",
+    tags: ["嫉妬", "かわいい", "先輩・後輩"],
     exStatus: "ex_purchased",
     review: "〇〇",
     url: "https://shop.nijisanji.jp/dig-01456.html"
@@ -63,8 +63,8 @@ const voiceData = [
     liver: "赤城ウェン",
     type: "コンセプトボイス",
     status: "期間終了",
-    sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    sweetness: "♥♡♡♡♡",
+    tags: ["嫉妬", "かわいい", "兄弟・姉妹"],
     exStatus: "none",
     review: "〇〇",
     url: ""
@@ -88,7 +88,7 @@ const voiceData = [
     type: "セリフボイス",
     status: "期間終了",
     sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    tags: ["嫉妬", "かわいい", "恋人"],
     exStatus: "none",
     review: "〇〇",
     url: ""
@@ -99,8 +99,8 @@ const voiceData = [
     liver: "赤城ウェン",
     type: "セリフボイス",
     status: "期間終了",
-    sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    sweetness: "♥♥♥♡♡",
+    tags: ["嫉妬", "かわいい", "恋人"],
     exStatus: "none",
     review: "〇〇",
     url: ""

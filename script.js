@@ -279,10 +279,10 @@ function filterData() {
   } else if (sort === 'sweetness-asc') {
     filtered.sort((a, b) => parseSweetness(a.sweetness) - parseSweetness(b.sweetness));
   } else if (sort === 'liver-asc') {
-    filtered.sort((a, b) => (a.liver || '').localeCompare(b.liver || '', 'ja'));
-  } else if (sort === 'title-asc') {
-    filtered.sort((a, b) => (a.title || '').localeCompare(b.title || '', 'ja'));
-  }
+  filtered.sort((a, b) => (a.liverKana || a.liver || '').localeCompare(b.liverKana || b.liver || '', 'ja'));
+} else if (sort === 'title-asc') {
+  filtered.sort((a, b) => (a.titleKana || a.title || '').localeCompare(b.titleKana || b.title || '', 'ja'));
+}
 
   renderCards(filtered);
 }

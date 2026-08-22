@@ -759,8 +759,8 @@ const voiceData = [
     liver: "伊波ライ",
     type: "コンセプトボイス",
     status: "販売中",
-    sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    sweetness: "♥♥♡♡♡",
+    tags: ["ホラー", "かわいい", "恋人"],
     exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
@@ -771,8 +771,8 @@ const voiceData = [
     liver: "伊波ライ",
     type: "セリフボイス",
     status: "販売中",
-    sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    sweetness: "♥♡♡♡♡",
+    tags: ["嫉妬", "かわいい", "兄弟"],
     exStatus: "none",
     review: "〇〇",
     url: ""
@@ -783,8 +783,8 @@ const voiceData = [
     liver: "緋八マナ",
     type: "コンセプトボイス",
     status: "販売中",
-    sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    sweetness: "♥♡♡♡♡",
+    tags: ["ホラー", "かわいい", "恋人"],
     exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
@@ -795,8 +795,8 @@ const voiceData = [
     liver: "星導ショウ",
     type: "コンセプトボイス",
     status: "販売中",
-    sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    sweetness: "♡♡♡♡♡",
+    tags: ["ホラー", "友人"],
     exStatus: "ex_purchased",
     review: "〇〇",
     url: ""

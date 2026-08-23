@@ -52,25 +52,33 @@ function populateTagDropdown() {
 }
 
 // データ内のライバー名を重複なく集めてプルダウンの選択肢を作る関数
+// データ内のライバー名を重複なく集めてプルダウンの選択肢を作る関数
 function populateLiverDropdown() {
   const liverSelect = document.getElementById('select-liver');
   if (!liverSelect) return;
 
-  const allLivers = new Set();
+  // ライバー名と読み仮名（liverKana）の対応マップを作る
+  const liverMap = new Map();
   voiceData.forEach(item => {
-    if (item.liver) {
-      allLivers.add(item.liver);
+    if (item.liver && !liverMap.has(item.liver)) {
+      liverMap.set(item.liver, item.liverKana || item.liver);
     }
   });
 
-  Array.from(allLivers).sort().forEach(liver => {
+  // 読み仮名を使って五十音順にソートする
+  const sortedLivers = Array.from(liverMap.keys()).sort((a, b) => {
+    const kanaA = liverMap.get(a) || a;
+    const kanaB = liverMap.get(b) || b;
+    return kanaA.localeCompare(kanaB, 'ja');
+  });
+
+  sortedLivers.forEach(liver => {
     const option = document.createElement('option');
     option.value = liver;
     option.textContent = liver;
     liverSelect.appendChild(option);
   });
 }
-
 // フィルターイベントの初期化
 function initFilters() {
   const liverInput = document.getElementById('search-liver');

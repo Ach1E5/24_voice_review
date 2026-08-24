@@ -275,7 +275,8 @@ function filterData() {
     const itemKey = getItemKey(item);
     const matchLiver = liverQuery === '' || 
     (item.liver && item.liver.toLowerCase().includes(liverQuery)) ||
-    (item.title && item.title.toLowerCase().includes(liverQuery));
+    (item.title && item.title.toLowerCase().includes(liverQuery)) ||
+    (item.titleKana && item.titleKana.toLowerCase().includes(liverQuery));
     const matchType = type === 'all' || item.type === type;
     const matchStatus = status === 'all' || item.status === status;
     const matchTagInput = tagQuery === '' || (item.tags && item.tags.some(t => t.toLowerCase().includes(tagQuery)));

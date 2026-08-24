@@ -410,7 +410,7 @@ const voiceData = [
     type: "コンセプトボイス",
     status: "販売中",
     sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    tags: ["嫉妬", "怖い", "友人"],
     exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
@@ -424,7 +424,7 @@ const voiceData = [
     type: "コンセプトボイス",
     status: "販売中",
     sweetness: "♥♥♥♥♡",
-    tags: ["嫉妬", "かわいい", "友人"],
+    tags: ["嫉妬", "怖い", "友人"],
     exStatus: "ex_purchased",
     review: "〇〇",
     url: ""
@@ -928,8 +928,36 @@ const voiceData = [
     type: "コンセプトボイス",
     status: "販売中",
     sweetness: "♡♡♡♡♡",
-    tags: ["ホラー", "友人"],
+    tags: ["ホラー", "怖い", "友人"],
     exStatus: "ex_purchased",
+    review: "〇〇",
+    url: ""
+  },
+  {
+    id: 66,
+    title: "片思いボイス",
+    liver: "赤城ウェン",
+    titleKana: "かたおもいぼいす",
+    liverKana: "あかぎうぇん",
+    type: "コンセプトボイス",
+    status: "販売中",
+    sweetness: "♥♡♡♡♡",
+    tags: ["かわいい", "友人"],
+    exStatus: "ex_purchased",
+    review: "〇〇",
+    url: ""
+  },
+    {
+    id: 66,
+    title: "片思いボイス",
+    liver: "伊波ライ",
+    titleKana: "かたおもいぼいす",
+    liverKana: "いなみらい",
+    type: "コンセプトボイス",
+    status: "販売中",
+    sweetness: "♥♡♡♡♡",
+    tags: ["かわいい", "友人"],
+    exStatus: "none",
     review: "〇〇",
     url: ""
   }

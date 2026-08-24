@@ -84,18 +84,20 @@ function initFilters() {
   const liverInput = document.getElementById('search-liver');
   const tagInput = document.getElementById('search-tag');
 
-  if (liverInput) {
-    liverInput.addEventListener('input', () => {
-      const liverSelect = document.getElementById('select-liver');
-      if (liverSelect) liverSelect.value = '';
-      filterData();
-    });
-    liverInput.addEventListener('search', () => {
-      const liverSelect = document.getElementById('select-liver');
-      if (liverSelect) liverSelect.value = '';
-      filterData();
-    });
-  }
+if (liverInput) {
+  const syncLiverSelect = () => {
+    const liverSelect = document.getElementById('select-liver');
+    if (liverSelect) {
+      const val = liverInput.value.trim();
+      const exists = Array.from(liverSelect.options).some(opt => opt.value === val);
+      liverSelect.value = exists ? val : '';
+    }
+    filterData();
+  };
+
+  liverInput.addEventListener('input', syncLiverSelect);
+  liverInput.addEventListener('search', syncLiverSelect);
+}
 
   if (tagInput) {
     tagInput.addEventListener('input', filterData);

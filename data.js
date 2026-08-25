@@ -77,7 +77,7 @@ const voiceData = [
     tags: ["嫉妬", "かわいい", "兄弟・姉妹"],
     exStatus: "none",
     review: "〇〇",
-    url: ""
+    url: "https://shop.nijisanji.jp/dig-00050_A.html"
   },
   {
     id: 6,
@@ -245,7 +245,7 @@ const voiceData = [
     tags: ["嫉妬", "かわいい", "友人"],
     exStatus: "none",
     review: "〇〇",
-    url: ""
+    url: "https://shop.nijisanji.jp/dig-01456.html"
   },
   {
     id: 18,
@@ -254,7 +254,7 @@ const voiceData = [
     titleKana: "ぱーてぃーぼいすぼりゅーむつー",
     liverKana: "いなみらい",
     type: "コンセプトボイス",
-    status: "販売中",
+    status: "販売終了",
     sweetness: "♥♥♥♥♡",
     tags: ["嫉妬", "かわいい", "友人"],
     exStatus: "none",
@@ -511,7 +511,7 @@ const voiceData = [
     tags: ["嫉妬", "かわいい", "友人"],
     exStatus: "ex_purchased",
     review: "〇〇",
-    url: ""
+    url: "https://shop.nijisanji.jp/dig-01456.html"
   },
   {
     id: 37,

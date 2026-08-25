@@ -277,6 +277,7 @@ input[type="search"]::-webkit-search-cancel-button {
   color: #1f7a2a;
 }
 
+.status-badge.販売終了,
 .status-badge.期間終了 {
   background: #ffe3e3;
   color: #c53030;

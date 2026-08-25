@@ -381,7 +381,7 @@ function renderCards(data) {
       </div>
       <div class="card-buttons">
         <a ${reviewAttr} class="${reviewClass}">感想を読む</a>
-        <a ${urlAttr} class="${urlClass}">公式販売ページ</a>
+       
       </div>
     `;
 

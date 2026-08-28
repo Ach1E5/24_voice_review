@@ -40,12 +40,15 @@ header h1 {
   background: var(--card-bg);
   padding: 24px;
   border-radius: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
   margin-bottom: 30px;
   box-shadow: 0 8px 20px rgba(255, 183, 197, 0.2);
   border: 2px solid #ffe3e8;
+}
+
+.filter-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .filter-group {
@@ -100,15 +103,20 @@ input[type="search"]::-webkit-search-cancel-button {
   margin-left: 4px;
 }
 
+/* トグルボタン（PCでは非表示） */
+.toggle-filter-btn {
+  display: none;
+}
+
 /* 「★ ブックマークのみ表示」切り替えボタン */
 .bookmark-filter-btn,
 .btn-bookmark-filter {
-  width: 100%; /* 横幅を他の入力欄に合わせる */
+  width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 12px 20px; /* 他のinputと同じ高さに調整 */
+  padding: 12px 20px;
   border-radius: 30px;
   border: 2px solid #ffccd5;
   background-color: #fff;
@@ -121,6 +129,7 @@ input[type="search"]::-webkit-search-cancel-button {
   box-shadow: 0 2px 6px rgba(255, 111, 145, 0.1);
   box-sizing: border-box;
 }
+
 .bookmark-filter-btn:hover,
 .btn-bookmark-filter:hover {
   background-color: #fff0f3;
@@ -165,6 +174,7 @@ input[type="search"]::-webkit-search-cancel-button {
 /* ==========================================
    カードレイアウト
    ========================================== */
+#card-list,
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -182,7 +192,7 @@ input[type="search"]::-webkit-search-cancel-button {
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid #ffe3e8;
-  position: relative !important; /* ★ボタン位置調整の基準 */
+  position: relative !important;
 }
 
 .card:hover {
@@ -211,7 +221,6 @@ input[type="search"]::-webkit-search-cancel-button {
   transform: scale(1.2);
 }
 
-/* SVG自体のトランジション */
 .bookmark-btn svg path {
   transition: fill 0.2s ease, stroke 0.2s ease;
 }
@@ -222,7 +231,7 @@ input[type="search"]::-webkit-search-cancel-button {
   flex-direction: column;
   gap: 6px;
   margin-bottom: 8px;
-  padding-right: 30px; /* ★ボタンと被らないように右側に余白を確保 */
+  padding-right: 30px;
 }
 
 .card-header-top {
@@ -235,6 +244,7 @@ input[type="search"]::-webkit-search-cancel-button {
 .card-header-bottom {
   display: flex;
   justify-content: flex-start;
+  gap: 4px;
 }
 
 /* 各種バッジスタイル */
@@ -451,8 +461,6 @@ input[type="search"]::-webkit-search-cancel-button {
 /* ==========================================
    リセットボタン & トップへ戻るボタン
    ========================================== */
-
-/* リセットボタン */
 .btn-reset {
   display: inline-flex;
   align-items: center;
@@ -468,7 +476,7 @@ input[type="search"]::-webkit-search-cancel-button {
   transition: all 0.2s ease;
   font-family: inherit;
   font-size: 0.9rem;
-  align-self: flex-end; /* 右寄りに配置 */
+  width: 100%;
 }
 
 .btn-reset:hover {
@@ -478,7 +486,6 @@ input[type="search"]::-webkit-search-cancel-button {
   transform: translateY(-1px);
 }
 
-/* トップへ戻るボタン */
 .back-to-top {
   position: fixed;
   bottom: 25px;
@@ -513,62 +520,61 @@ input[type="search"]::-webkit-search-cancel-button {
   box-shadow: 0 6px 16px rgba(255, 77, 109, 0.5);
 }
 
+/* ==========================================
+   レスポンシブ対応（スマホ表示）
+   ========================================== */
 @media (max-width: 768px) {
-  .filter-container.hidden-mobile {
-    display: none; /* スマホの時だけ初期状態を閉じておく */
-  }
-  /* カードの余白を少し詰めて画面を有効活用 */
-  .card {
-    padding: 12px;
+  .toggle-filter-btn {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    margin: 0 0 16px 0;
+    padding: 12px 20px;
+    background-color: #ffffff;
+    color: #ff4d6d;
+    border: 2px solid #ffb3c1;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(255, 77, 109, 0.08);
   }
 
-  /* タグやバッジの文字サイズ・余白を調整 */
+  .toggle-filter-btn:hover,
+  .toggle-filter-btn:active {
+    background-color: #fff0f3;
+    border-color: #ff4d6d;
+  }
+
+  /* スマホの時はデフォルトでフィルター領域を折りたたむ */
+  .filter-container {
+    display: none;
+  }
+
+  /* JSでis-openクラスがついたら開く */
+  .filter-container.is-open {
+    display: block;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
   .tag, .type-badge, .status-badge {
     font-size: 12px;
-    padding: 4px 8px;
   }
 
-  /* タップエリアを大きく（指で押しやすくする） */
-  .review-btn, .bookmark-btn, .type-badge {
-    min-height: 44px; /* スマホで押しやすい推奨サイズ */
+  .review-btn {
+    min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   
-  #card-list {
-    grid-template-columns: 1fr; /* スマホは完全1列 */
-    gap: 12px;
+  #card-list,
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
-}
-/* カード一覧の親要素 */
-#card-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-/* 絞り込みトグルボタン（サイトのテイストに合わせたデザイン） */
-.toggle-filter-btn {
-  width: 100%;
-  max-width: 400px;
-  display: block;
-  margin: 0 auto 16px auto;
-  padding: 10px 20px;
-  background-color: #ffffff;
-  color: #ff4d6d;
-  border: 2px solid #ffb3c1;
-  border-radius: 25px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(255, 77, 109, 0.08);
-}
-
-.toggle-filter-btn:hover,
-.toggle-filter-btn:active {
-  background-color: #fff0f3;
-  border-color: #ff4d6d;
-  transform: translateY(-1px);
 }

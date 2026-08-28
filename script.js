@@ -53,7 +53,6 @@ function populateTagDropdown() {
 }
 
 // データ内のライバー名を重複なく集めてプルダウンの選択肢を作る関数
-// データ内のライバー名を重複なく集めてプルダウンの選択肢を作る関数
 function populateLiverDropdown() {
   const liverSelect = document.getElementById('select-liver');
   if (!liverSelect) return;
@@ -80,29 +79,24 @@ function populateLiverDropdown() {
     liverSelect.appendChild(option);
   });
 }
+
 // フィルターイベントの初期化
 function initFilters() {
   const liverInput = document.getElementById('search-liver');
-  const tagInput = document.getElementById('search-tag');
 
-if (liverInput) {
-  const syncLiverSelect = () => {
-    const liverSelect = document.getElementById('select-liver');
-    if (liverSelect) {
-      const val = liverInput.value.trim();
-      const exists = Array.from(liverSelect.options).some(opt => opt.value === val);
-      liverSelect.value = exists ? val : '';
-    }
-    filterData();
-  };
+  if (liverInput) {
+    const syncLiverSelect = () => {
+      const liverSelect = document.getElementById('select-liver');
+      if (liverSelect) {
+        const val = liverInput.value.trim();
+        const exists = Array.from(liverSelect.options).some(opt => opt.value === val);
+        liverSelect.value = exists ? val : '';
+      }
+      filterData();
+    };
 
-  liverInput.addEventListener('input', syncLiverSelect);
-  liverInput.addEventListener('search', syncLiverSelect);
-}
-
-  if (tagInput) {
-    tagInput.addEventListener('input', filterData);
-    tagInput.addEventListener('search', filterData);
+    liverInput.addEventListener('input', syncLiverSelect);
+    liverInput.addEventListener('search', syncLiverSelect);
   }
 
   const liverSelect = document.getElementById('select-liver');
@@ -160,7 +154,6 @@ function initScrollTop() {
 // 全フィルター初期化（リセット）
 function resetAllFilters() {
   const liverInput = document.getElementById('search-liver');
-  const tagInput = document.getElementById('search-tag');
   const liverSelect = document.getElementById('select-liver');
   const filterType = document.getElementById('filter-type');
   const filterStatus = document.getElementById('filter-status');
@@ -168,7 +161,6 @@ function resetAllFilters() {
   const sortOrder = document.getElementById('sort-order');
 
   if (liverInput) liverInput.value = '';
-  if (tagInput) tagInput.value = '';
   if (liverSelect) liverSelect.value = '';
   if (filterType) filterType.value = 'all';
   if (filterStatus) filterStatus.value = 'all';
@@ -255,13 +247,11 @@ function parseSweetness(sweetnessStr) {
 
 function filterData() {
   const liverInput = document.getElementById('search-liver');
-  const tagInput = document.getElementById('search-tag');
   const filterType = document.getElementById('filter-type');
   const filterStatus = document.getElementById('filter-status');
   const sortOrder = document.getElementById('sort-order');
 
   const liverQuery = liverInput ? liverInput.value.trim().toLowerCase() : '';
-  const tagQuery = tagInput ? tagInput.value.trim().toLowerCase() : '';
   const type = filterType ? filterType.value : 'all';
   const status = filterStatus ? filterStatus.value : 'all';
   const sort = sortOrder ? sortOrder.value : 'shuffle';
@@ -282,16 +272,15 @@ function filterData() {
   let filtered = shuffledData.filter(item => {
     const itemKey = getItemKey(item);
     const matchLiver = liverQuery === '' || 
-    (item.liver && item.liver.toLowerCase().includes(liverQuery)) ||
-    (item.title && item.title.toLowerCase().includes(liverQuery)) ||
-    (item.titleKana && item.titleKana.toLowerCase().includes(liverQuery));
+      (item.liver && item.liver.toLowerCase().includes(liverQuery)) ||
+      (item.title && item.title.toLowerCase().includes(liverQuery)) ||
+      (item.titleKana && item.titleKana.toLowerCase().includes(liverQuery));
     const matchType = type === 'all' || item.type === type;
     const matchStatus = status === 'all' || item.status === status;
-    const matchTagInput = tagQuery === '' || (item.tags && item.tags.some(t => t.toLowerCase().includes(tagQuery)));
     const matchTagSelect = currentSelectedTag === '' || (item.tags && item.tags.includes(currentSelectedTag));
     const matchBookmark = !showOnlyBookmarks || bookmarkedKeys.includes(itemKey);
 
-    return matchLiver && matchType && matchStatus && matchTagInput && matchTagSelect && matchBookmark;
+    return matchLiver && matchType && matchStatus && matchTagSelect && matchBookmark;
   });
 
   // 並び替え処理
@@ -300,10 +289,10 @@ function filterData() {
   } else if (sort === 'sweetness-asc') {
     filtered.sort((a, b) => parseSweetness(a.sweetness) - parseSweetness(b.sweetness));
   } else if (sort === 'liver-asc') {
-  filtered.sort((a, b) => (a.liverKana || a.liver || '').localeCompare(b.liverKana || b.liver || '', 'ja'));
-} else if (sort === 'title-asc') {
-  filtered.sort((a, b) => (a.titleKana || a.title || '').localeCompare(b.titleKana || b.title || '', 'ja'));
-}
+    filtered.sort((a, b) => (a.liverKana || a.liver || '').localeCompare(b.liverKana || b.liver || '', 'ja'));
+  } else if (sort === 'title-asc') {
+    filtered.sort((a, b) => (a.titleKana || a.title || '').localeCompare(b.titleKana || b.title || '', 'ja'));
+  }
 
   renderCards(filtered);
 }
@@ -326,6 +315,7 @@ function renderCards(data) {
     const hasReview = item.review && item.review.trim() !== "";
     const reviewAttr = hasReview ? `href="${item.review}" target="_blank" rel="noopener"` : '';
     const reviewClass = hasReview ? 'review-btn' : 'review-btn disabled';
+    
     // バッジ生成のパーツ
     const badgeExP = '<span class="ex-badge ex-purchased">EXあり（購入済）</span>';
     const badgeExU = '<span class="ex-badge ex-unpurchased">EXあり（未購入）</span>';
@@ -389,7 +379,6 @@ function renderCards(data) {
       </div>
       <div class="card-buttons">
         <a ${reviewAttr} class="${reviewClass}">感想を読む</a>
-       
       </div>
     `;
 

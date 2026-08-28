@@ -1,72 +1,103 @@
-<!-- 絞り込みフィルターエリア -->
-<section class="filter-section">
-  <!-- 開閉ボタン（スマホの時だけ表示） -->
-  <button id="toggle-filter-btn" class="toggle-filter-btn" type="button">絞り込み条件を開く</button>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ボイス感想</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-  <!-- フィルター中身 -->
-  <div id="filter-container" class="filter-container">
-    <div class="filter-wrapper">
-      <div class="filter-group">
-        <label>ライバー名・タイトル：</label>
-        <input type="search" id="search-liver" placeholder="ライバー名・タイトルで検索...">
-        <select id="select-liver" style="margin-top: 6px;">
-          <option value="">すべてのライバー</option>
-        </select>
-      </div>
+  <header>
+    <h1>ボイス感想</h1>
+  </header>
 
-      <div class="filter-group">
-        <label>タグ一覧：</label>
-        <select id="select-tag">
-          <option value="">すべてのタグ</option>
-        </select>
-      </div>
+  <main class="container">
+    <!-- 絞り込みフィルターエリア -->
+    <section class="filter-section">
+      <!-- 開閉ボタン（スマホの時だけ表示） -->
+      <button id="toggle-filter-btn" class="toggle-filter-btn" type="button">絞り込み条件を開く</button>
 
-      <div class="filter-group">
-        <label>販売状況：</label>
-        <select id="filter-status">
-          <option value="all">すべて</option>
-          <option value="販売中">販売中</option>
-          <option value="販売終了">販売終了</option>
-        </select>
-      </div>
+      <!-- フィルター中身 -->
+      <div id="filter-container" class="filter-container">
+        <div class="filter-wrapper">
+          <div class="filter-group">
+            <label>ライバー名・タイトル：</label>
+            <input type="search" id="search-liver" placeholder="ライバー名・タイトルで検索...">
+            <select id="select-liver" style="margin-top: 6px;">
+              <option value="">すべてのライバー</option>
+            </select>
+          </div>
 
-      <div class="filter-group">
-        <label>ボイス種別：</label>
-        <select id="filter-type">
-          <option value="all">すべて</option>
-          <option value="コンセプトボイス">コンセプトボイス</option>
-          <option value="セリフボイス">セリフボイス</option>
-          <option value="ルート選択ボイス">ルート選択ボイス</option>
-        </select>
-      </div>
+          <div class="filter-group">
+            <label>タグ一覧：</label>
+            <select id="select-tag">
+              <option value="">すべてのタグ</option>
+            </select>
+          </div>
 
-      <div class="filter-group">
-        <label for="sort-order">並び替え：</label>
-        <select id="sort-order">
-          <option value="shuffle">ランダム</option>
-          <option value="sweetness-desc">糖度が高い順</option>
-          <option value="sweetness-asc">糖度が低い順</option>
-          <option value="liver-asc">ライバー名順</option>
-          <option value="title-asc">タイトル順</option>
-        </select>
-      </div>
+          <div class="filter-group">
+            <label>販売状況：</label>
+            <select id="filter-status">
+              <option value="all">すべて</option>
+              <option value="販売中">販売中</option>
+              <option value="販売終了">販売終了</option>
+            </select>
+          </div>
 
-      <div class="filter-group">
-        <label>&nbsp;</label>
-        <button id="btn-toggle-bookmark" class="btn-bookmark-filter" type="button" onclick="toggleBookmarkFilter()">☆ ブックマークのみ表示</button>
-      </div>
+          <div class="filter-group">
+            <label>ボイス種別：</label>
+            <select id="filter-type">
+              <option value="all">すべて</option>
+              <option value="コンセプトボイス">コンセプトボイス</option>
+              <option value="セリフボイス">セリフボイス</option>
+              <option value="ルート選択ボイス">ルート選択ボイス</option>
+            </select>
+          </div>
 
-      <div class="filter-group">
-        <label>&nbsp;</label>
-        <button id="btn-reset" class="btn-reset" type="button">条件をリセット</button>
-      </div>
+          <div class="filter-group">
+            <label for="sort-order">並び替え：</label>
+            <select id="sort-order">
+              <option value="shuffle">ランダム</option>
+              <option value="sweetness-desc">糖度が高い順</option>
+              <option value="sweetness-asc">糖度が低い順</option>
+              <option value="liver-asc">ライバー名順</option>
+              <option value="title-asc">タイトル順</option>
+            </select>
+          </div>
 
-      <div id="active-tag-badge" class="active-tag-container" style="display: none;">
-        <span>選択中のタグ：</span>
-        <span class="active-badge" onclick="clearTagFilter()">
-          <span id="active-tag-name"></span> ✖
-        </span>
+          <div class="filter-group">
+            <label>&nbsp;</label>
+            <button id="btn-toggle-bookmark" class="btn-bookmark-filter" type="button" onclick="toggleBookmarkFilter()">☆ ブックマークのみ表示</button>
+          </div>
+
+          <div class="filter-group">
+            <label>&nbsp;</label>
+            <button id="btn-reset" class="btn-reset" type="button">条件をリセット</button>
+          </div>
+
+          <div id="active-tag-badge" class="active-tag-container" style="display: none;">
+            <span>選択中のタグ：</span>
+            <span class="active-badge" onclick="clearTagFilter()">
+              <span id="active-tag-name"></span> ✖
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
+
+    <!-- カード表示エリア -->
+    <div id="card-list" class="card-grid"></div>
+  </main>
+
+  <!-- トップに戻るボタン -->
+  <button id="back-to-top" class="back-to-top" type="button">▲</button>
+
+  <!-- JS読み込み（data.jsを先に読み込む） -->
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

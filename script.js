@@ -1,418 +1,286 @@
-// グローバル変数の宣言
-let currentSelectedTag = '';
-let bookmarkedKeys = JSON.parse(localStorage.getItem('voice_bookmarks_keys')) || [];
-let showOnlyBookmarks = false;
-let shuffledData = []; // 初回シャッフルデータを保持
-
-// データ項目から一意のキーを生成（title + liver）
-function getItemKey(item) {
-  return `${item.liver}_${item.title}`;
-}
-
-// 配列をランダムにシャッフル（フィッシャー–イェーツの手法）
-function shuffleArray(array) {
-  const arr = [...array];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-// 初期化処理
-function init() {
-  // 初回アクセス時にデータをランダムシャッフル
-  shuffledData = shuffleArray(voiceData);
-
-  populateTagDropdown();
-  populateLiverDropdown();
+// ==========================================
+// 初期化とイベント設定
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+  // 初期データの読み込み・描画
   initFilters();
-  initScrollTop();
-  initToggleFilter();
-  filterData();
-}
+  renderCards();
 
-// データ内のタグを重複なく集めてプルダウンの選択肢を作る関数
-function populateTagDropdown() {
-  const tagSelect = document.getElementById('select-tag');
-  if (!tagSelect) return;
-
-  const allTags = new Set();
-  voiceData.forEach(item => {
-    if (item.tags) {
-      item.tags.forEach(t => allTags.add(t));
-    }
-  });
-
-  allTags.forEach(tag => {
-    const option = document.createElement('option');
-    option.value = tag;
-    option.textContent = `#${tag}`;
-    tagSelect.appendChild(option);
-  });
-}
-
-// データ内のライバー名を重複なく集めてプルダウンの選択肢を作る関数
-function populateLiverDropdown() {
-  const liverSelect = document.getElementById('select-liver');
-  if (!liverSelect) return;
-
-  // ライバー名と読み仮名（liverKana）の対応マップを作る
-  const liverMap = new Map();
-  voiceData.forEach(item => {
-    if (item.liver && !liverMap.has(item.liver)) {
-      liverMap.set(item.liver, item.liverKana || item.liver);
-    }
-  });
-
-  // 読み仮名を使って五十音順にソートする
-  const sortedLivers = Array.from(liverMap.keys()).sort((a, b) => {
-    const kanaA = liverMap.get(a) || a;
-    const kanaB = liverMap.get(b) || b;
-    return kanaA.localeCompare(kanaB, 'ja');
-  });
-
-  sortedLivers.forEach(liver => {
-    const option = document.createElement('option');
-    option.value = liver;
-    option.textContent = liver;
-    liverSelect.appendChild(option);
-  });
-}
-
-// フィルターイベントの初期化
-function initFilters() {
-  const liverInput = document.getElementById('search-liver');
-
-  if (liverInput) {
-    const syncLiverSelect = () => {
-      const liverSelect = document.getElementById('select-liver');
-      if (liverSelect) {
-        const val = liverInput.value.trim();
-        const exists = Array.from(liverSelect.options).some(opt => opt.value === val);
-        liverSelect.value = exists ? val : '';
-      }
-      filterData();
-    };
-
-    liverInput.addEventListener('input', syncLiverSelect);
-    liverInput.addEventListener('search', syncLiverSelect);
-  }
-
-  const liverSelect = document.getElementById('select-liver');
-  if (liverSelect) {
-    liverSelect.addEventListener('change', (e) => {
-      if (liverInput) liverInput.value = e.target.value;
-      filterData();
-    });
-  }
-
-  const filterType = document.getElementById('filter-type');
-  if (filterType) filterType.addEventListener('change', filterData);
-
-  const filterStatus = document.getElementById('filter-status');
-  if (filterStatus) filterStatus.addEventListener('change', filterData);
-
-  const selectTag = document.getElementById('select-tag');
-  if (selectTag) {
-    selectTag.addEventListener('change', (e) => {
-      currentSelectedTag = e.target.value;
-      filterData();
-    });
-  }
-
-  // ソート切り替え
-  const sortOrder = document.getElementById('sort-order');
-  if (sortOrder) sortOrder.addEventListener('change', filterData);
-
-  // リセットボタン
-  const btnReset = document.getElementById('btn-reset');
-  if (btnReset) btnReset.addEventListener('click', resetAllFilters);
-}
-
-// ページのトップへ戻るボタンのイベント初期化
-function initScrollTop() {
-  const backToTopBtn = document.getElementById('back-to-top');
-  if (!backToTopBtn) return;
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      backToTopBtn.classList.add('show');
-    } else {
-      backToTopBtn.classList.remove('show');
-    }
-  });
-
-  backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
-}
-
-// 全フィルター初期化（リセット）
-function resetAllFilters() {
-  const liverInput = document.getElementById('search-liver');
-  const liverSelect = document.getElementById('select-liver');
-  const filterType = document.getElementById('filter-type');
-  const filterStatus = document.getElementById('filter-status');
-  const selectTag = document.getElementById('select-tag');
-  const sortOrder = document.getElementById('sort-order');
-
-  if (liverInput) liverInput.value = '';
-  if (liverSelect) liverSelect.value = '';
-  if (filterType) filterType.value = 'all';
-  if (filterStatus) filterStatus.value = 'all';
-  if (selectTag) selectTag.value = '';
-  if (sortOrder) sortOrder.value = 'shuffle';
-
-  currentSelectedTag = '';
-  showOnlyBookmarks = false;
-
-  const bookmarkBtn = document.getElementById('btn-toggle-bookmark');
-  if (bookmarkBtn) {
-    bookmarkBtn.classList.remove('active');
-    bookmarkBtn.textContent = '☆ ブックマークのみ表示';
-  }
-
-  // 再びランダムに並び替え直す
-  shuffledData = shuffleArray(voiceData);
-  filterData();
-}
-
-// カード内のタグをクリックした時の処理
-function filterByTag(tagName) {
-  currentSelectedTag = tagName;
-  const tagSelect = document.getElementById('select-tag');
-  if (tagSelect) tagSelect.value = tagName;
-  filterData();
-}
-
-// カード内のライバー名をクリックした時の処理
-function filterByLiver(liverName) {
-  const liverInput = document.getElementById('search-liver');
-  const liverSelect = document.getElementById('select-liver');
-  if (liverInput) liverInput.value = liverName;
-  if (liverSelect) liverSelect.value = liverName;
-  filterData();
-}
-
-// カード内のボイス種別をクリックした時の処理
-function filterByType(typeName) {
-  const filterType = document.getElementById('filter-type');
-  if (filterType) filterType.value = typeName;
-  filterData();
-}
-
-// 選択中タグを解除する関数
-function clearTagFilter() {
-  currentSelectedTag = '';
-  const tagSelect = document.getElementById('select-tag');
-  if (tagSelect) tagSelect.value = '';
-  filterData();
-}
-
-// ブックマークのON/OFF切り替え
-function toggleBookmark(key) {
-  const index = bookmarkedKeys.indexOf(key);
-  if (index > -1) {
-    bookmarkedKeys.splice(index, 1);
-  } else {
-    bookmarkedKeys.push(key);
-  }
-  localStorage.setItem('voice_bookmarks_keys', JSON.stringify(bookmarkedKeys));
-  filterData();
-}
-
-// ブックマークのみ表示の切り替え
-function toggleBookmarkFilter() {
-  showOnlyBookmarks = !showOnlyBookmarks;
-  const btn = document.getElementById('btn-toggle-bookmark');
-  if (btn) {
-    btn.classList.toggle('active', showOnlyBookmarks);
-    btn.textContent = showOnlyBookmarks ? '★ ブックマークのみ表示中' : '☆ ブックマークのみ表示';
-  }
-  filterData();
-}
-
-// 糖度の文字列から数値（★の数など）を抽出するヘルパー
-function parseSweetness(sweetnessStr) {
-  if (!sweetnessStr) return 0;
-  const stars = (sweetnessStr.match(/★/g) || []).length;
-  if (stars > 0) return stars;
-  const num = parseFloat(sweetnessStr);
-  return isNaN(num) ? 0 : num;
-}
-
-function filterData() {
-  const liverInput = document.getElementById('search-liver');
-  const filterType = document.getElementById('filter-type');
-  const filterStatus = document.getElementById('filter-status');
-  const sortOrder = document.getElementById('sort-order');
-
-  const liverQuery = liverInput ? liverInput.value.trim().toLowerCase() : '';
-  const type = filterType ? filterType.value : 'all';
-  const status = filterStatus ? filterStatus.value : 'all';
-  const sort = sortOrder ? sortOrder.value : 'shuffle';
-
-  // バッジ表示制御
-  const badgeContainer = document.getElementById('active-tag-badge');
-  const badgeName = document.getElementById('active-tag-name');
-  if (badgeContainer && badgeName) {
-    if (currentSelectedTag) {
-      badgeName.textContent = `#${currentSelectedTag}`;
-      badgeContainer.style.display = 'flex';
-    } else {
-      badgeContainer.style.display = 'none';
-    }
-  }
-
-  // 絞り込み処理
-  let filtered = shuffledData.filter(item => {
-    const itemKey = getItemKey(item);
-    const matchLiver = liverQuery === '' || 
-      (item.liver && item.liver.toLowerCase().includes(liverQuery)) ||
-      (item.title && item.title.toLowerCase().includes(liverQuery)) ||
-      (item.titleKana && item.titleKana.toLowerCase().includes(liverQuery));
-    const matchType = type === 'all' || item.type === type;
-    const matchStatus = status === 'all' || item.status === status;
-    const matchTagSelect = currentSelectedTag === '' || (item.tags && item.tags.includes(currentSelectedTag));
-    const matchBookmark = !showOnlyBookmarks || bookmarkedKeys.includes(itemKey);
-
-    return matchLiver && matchType && matchStatus && matchTagSelect && matchBookmark;
-  });
-
-  // 並び替え処理
-  if (sort === 'sweetness-desc') {
-    filtered.sort((a, b) => parseSweetness(b.sweetness) - parseSweetness(a.sweetness));
-  } else if (sort === 'sweetness-asc') {
-    filtered.sort((a, b) => parseSweetness(a.sweetness) - parseSweetness(b.sweetness));
-  } else if (sort === 'liver-asc') {
-    filtered.sort((a, b) => (a.liverKana || a.liver || '').localeCompare(b.liverKana || b.liver || '', 'ja'));
-  } else if (sort === 'title-asc') {
-    filtered.sort((a, b) => (a.titleKana || a.title || '').localeCompare(b.titleKana || b.title || '', 'ja'));
-  }
-
-  renderCards(filtered);
-}
-
-function renderCards(data) {
-  const list = document.getElementById('card-list');
-  if (!list) return;
-  list.innerHTML = '';
-
-  data.forEach((item, index) => {
-    const card = document.createElement('div');
-    card.className = 'card card-fade-in';
-    card.style.animationDelay = `${index * 0.05}s`;
-
-    const itemKey = getItemKey(item);
-    const isBookmarked = bookmarkedKeys.includes(itemKey);
-    const bookmarkClass = isBookmarked ? 'bookmarked' : '';
-    const bookmarkStar = `<svg width="22" height="22" viewBox="0 0 24 24" fill="${isBookmarked ? '#ff4d6d' : 'none'}" stroke="${isBookmarked ? '#ff4d6d' : '#ccc'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 0 0 .95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 0 0-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 0 0-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 0 0-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 0 0 .951-.69l1.519-4.674z"/></svg>`;
-
-    const hasReview = item.review && item.review.trim() !== "";
-    const reviewAttr = hasReview ? `href="${item.review}" target="_blank" rel="noopener"` : '';
-    const reviewClass = hasReview ? 'review-btn' : 'review-btn disabled';
-    
-    // バッジ生成のパーツ
-    const badgeExP = '<span class="ex-badge ex-purchased">EXあり（購入済）</span>';
-    const badgeExU = '<span class="ex-badge ex-unpurchased">EXあり（未購入）</span>';
-    const badgeExaP = '<span class="ex-badge ex-purchased-exa">EXAあり（購入済）</span>';
-    const badgeExaU = '<span class="ex-badge ex-unpurchased-exa">EXAあり（未購入）</span>';
-    const badgeNone = '<span class="ex-badge ex-none">EXなし</span>';
-
-    let exBadgeHtml = '';
-    switch (item.exStatus) {
-      case 'ex_purchased':
-      case 'purchased':
-        exBadgeHtml = badgeExP;
-        break;
-      case 'ex_p_exa_u':
-        exBadgeHtml = `${badgeExP}${badgeExaU}`;
-        break;
-      case 'ex_u_exa_p':
-        exBadgeHtml = `${badgeExU}${badgeExaP}`;
-        break;
-      case 'ex_p_exa_p':
-      case 'purchased_exa':
-        exBadgeHtml = `${badgeExP}${badgeExaP}`;
-        break;
-      case 'ex_u_exa_u':
-      case 'unpurchased_exa':
-        exBadgeHtml = `${badgeExU}${badgeExaU}`;
-        break;
-      case 'none':
-        exBadgeHtml = badgeNone;
-        break;
-    }
-
-    let typeClass = '';
-    if (item.type === 'ルート選択ボイス') {
-      typeClass = 'type-route';
-    } else if (item.type === 'セリフボイス') {
-      typeClass = 'type-dialogue';
-    } else if (item.type === 'コンセプトボイス') {
-      typeClass = 'type-concept';
-    }
-
-    card.innerHTML = `
-      <button class="bookmark-btn ${bookmarkClass}" type="button">${bookmarkStar}</button>
-      <div>
-        <div class="card-header">
-          <div class="card-header-top">
-            <span class="type-badge ${typeClass}" onclick="filterByType('${item.type}')">${item.type || ''}</span>
-            <span class="status-badge ${item.status}">${item.status}</span>
-          </div>
-          ${exBadgeHtml ? `<div class="card-header-bottom">${exBadgeHtml}</div>` : ''}
-        </div>
-        <h3 class="card-title">${item.title}</h3>
-        <div class="liver-name">👤 ${item.liver}</div>
-        <div class="sweetness">
-          <span class="sweetness-label">糖度：</span>
-          <span class="sweetness-stars">${item.sweetness}</span>
-        </div>
-        <div class="tags">
-          ${item.tags ? item.tags.map(t => `<span class="tag" onclick="filterByTag('${t.replace(/'/g, "\\'")}')">#${t}</span>`).join('') : ''}
-        </div>
-      </div>
-      <div class="card-buttons">
-        <a ${reviewAttr} class="${reviewClass}">感想を読む</a>
-      </div>
-    `;
-
-    const bookmarkBtn = card.querySelector('.bookmark-btn');
-    if (bookmarkBtn) {
-      bookmarkBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        toggleBookmark(itemKey);
-      });
-    }
-
-    const liverElement = card.querySelector('.liver-name');
-    if (liverElement) {
-      liverElement.addEventListener('click', () => {
-        filterByLiver(item.liver);
-      });
-    }
-
-    list.appendChild(card);
-  });
-}
-
-// ページ読み込み時に実行
-document.addEventListener('DOMContentLoaded', init);
-
-// フィルター開閉用の関数
-function initToggleFilter() {
+  // スマホ用 絞り込みフィルター開閉処理
   const toggleBtn = document.getElementById('toggle-filter-btn');
   const filterContainer = document.getElementById('filter-container');
 
   if (toggleBtn && filterContainer) {
     toggleBtn.addEventListener('click', () => {
       filterContainer.classList.toggle('is-open');
+      if (filterContainer.classList.contains('is-open')) {
+        toggleBtn.textContent = '絞り込み条件を閉じる';
+      } else {
+        toggleBtn.textContent = '絞り込み条件を開く';
+      }
     });
   }
+
+  // フィルター各種の変更イベント登録
+  document.getElementById('search-liver')?.addEventListener('input', renderCards);
+  document.getElementById('select-liver')?.addEventListener('change', renderCards);
+  document.getElementById('select-tag')?.addEventListener('change', renderCards);
+  document.getElementById('filter-status')?.addEventListener('change', renderCards);
+  document.getElementById('filter-type')?.addEventListener('change', renderCards);
+  document.getElementById('sort-order')?.addEventListener('change', renderCards);
+
+  // リセットボタン
+  document.getElementById('btn-reset')?.addEventListener('click', resetFilters);
+
+  // トップに戻るボタン
+  const backToTopBtn = document.getElementById('back-to-top');
+  if (backToTopBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+});
+
+// グローバル状態
+let isBookmarkOnly = false;
+
+// ==========================================
+// フィルターの初期選択肢設定
+// ==========================================
+function initFilters() {
+  if (typeof voiceData === 'undefined') return;
+
+  const selectLiver = document.getElementById('select-liver');
+  const selectTag = document.getElementById('select-tag');
+
+  // ライバー一覧の重複排除とソート
+  const livers = [...new Set(voiceData.map(item => item.liver))].sort();
+  livers.forEach(liver => {
+    const opt = document.createElement('option');
+    opt.value = liver;
+    opt.textContent = liver;
+    selectLiver.appendChild(opt);
+  });
+
+  // タグ一覧の重複排除とソート
+  const tags = [...new Set(voiceData.flatMap(item => item.tags || []))].sort();
+  tags.forEach(tag => {
+    const opt = document.createElement('option');
+    opt.value = tag;
+    opt.textContent = tag;
+    selectTag.appendChild(opt);
+  });
+}
+
+// ==========================================
+// カード描画メイン処理
+// ==========================================
+function renderCards() {
+  const container = document.getElementById('card-list');
+  if (!container || typeof voiceData === 'undefined') return;
+
+  const searchVal = document.getElementById('search-liver')?.value.trim().toLowerCase() || '';
+  const selectedLiver = document.getElementById('select-liver')?.value || '';
+  const selectedTag = document.getElementById('select-tag')?.value || '';
+  const selectedStatus = document.getElementById('filter-status')?.value || 'all';
+  const selectedType = document.getElementById('filter-type')?.value || 'all';
+  const sortOrder = document.getElementById('sort-order')?.value || 'shuffle';
+
+  // 選択中タグバッジの表示制御
+  const activeBadge = document.getElementById('active-tag-badge');
+  const activeTagName = document.getElementById('active-tag-name');
+  if (activeBadge && activeTagName) {
+    if (selectedTag) {
+      activeTagName.textContent = selectedTag;
+      activeBadge.style.display = 'inline-flex';
+    } else {
+      activeBadge.style.display = 'none';
+    }
+  }
+
+  // ブックマークデータ取得
+  const bookmarks = JSON.parse(localStorage.getItem('voice_bookmarks') || '[]');
+
+  // フィルタリング
+  let filtered = voiceData.filter(item => {
+    // 検索ワード（ライバー名かタイトル）
+    if (searchVal) {
+      const matchLiver = item.liver.toLowerCase().includes(searchVal);
+      const matchTitle = item.title.toLowerCase().includes(searchVal);
+      if (!matchLiver && !matchTitle) return false;
+    }
+    // ライバー選択
+    if (selectedLiver && item.liver !== selectedLiver) return false;
+    // タグ選択
+    if (selectedTag && (!item.tags || !item.tags.includes(selectedTag))) return false;
+    // 販売状況
+    if (selectedStatus !== 'all' && item.status !== selectedStatus) return false;
+    // ボイス種別
+    if (selectedType !== 'all' && item.type !== selectedType) return false;
+    // ブックマークのみ
+    if (isBookmarkOnly && !bookmarks.includes(item.id)) return false;
+
+    return true;
+  });
+
+  // 並び替え
+  if (sortOrder === 'sweetness-desc') {
+    filtered.sort((a, b) => (b.sweetness || 0) - (a.sweetness || 0));
+  } else if (sortOrder === 'sweetness-asc') {
+    filtered.sort((a, b) => (a.sweetness || 0) - (b.sweetness || 0));
+  } else if (sortOrder === 'liver-asc') {
+    filtered.sort((a, b) => a.liver.localeCompare(b.liver, 'ja'));
+  } else if (sortOrder === 'title-asc') {
+    filtered.sort((a, b) => a.title.localeCompare(b.title, 'ja'));
+  } else if (sortOrder === 'shuffle') {
+    filtered.sort(() => Math.random() - 0.5);
+  }
+
+  // HTML出力
+  container.innerHTML = '';
+  if (filtered.length === 0) {
+    container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px 0;">該当するボイスが見つかりませんでした。</p>';
+    return;
+  }
+
+  filtered.forEach(item => {
+    const isBookmarked = bookmarks.includes(item.id);
+    const cardHtml = createCardElement(item, isBookmarked);
+    container.appendChild(cardHtml);
+  });
+}
+
+// ==========================================
+// カードHTML生成
+// ==========================================
+function createCardElement(item, isBookmarked) {
+  const card = document.createElement('div');
+  card.className = 'card card-fade-in';
+
+  // 星（糖度）表示の変換
+  const stars = '★'.repeat(item.sweetness || 0) + '☆'.repeat(5 - (item.sweetness || 0));
+
+  // 種別バッジのクラス判定
+  let typeClass = '';
+  if (item.type === 'ルート選択ボイス') typeClass = 'type-route';
+  else if (item.type === 'セリフボイス') typeClass = 'type-dialogue';
+  else if (item.type === 'コンセプトボイス') typeClass = 'type-concept';
+
+  // タグ生成
+  const tagsHtml = (item.tags || []).map(t => `<span class="tag" onclick="selectTag('${t}')">#${t}</span>`).join('');
+
+  // ボタン設定
+  const reviewBtnClass = item.reviewUrl ? 'review-btn' : 'review-btn disabled';
+  const buyBtnClass = item.buyUrl ? 'buy-btn-card' : 'buy-btn-card disabled';
+  const reviewTarget = item.reviewUrl ? 'target="_blank" rel="noopener"' : '';
+  const buyTarget = item.buyUrl ? 'target="_blank" rel="noopener"' : '';
+
+  card.innerHTML = `
+    <button class="bookmark-btn" onclick="toggleBookmark('${item.id}')" aria-label="ブックマーク">
+      <svg width="24" height="24" viewBox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+              fill="${isBookmarked ? '#ff4d6d' : 'none'}"
+              stroke="${isBookmarked ? '#ff4d6d' : '#ccc'}"
+              stroke-width="2"/>
+      </svg>
+    </button>
+    <div>
+      <div class="card-header">
+        <div class="card-header-top">
+          ${item.type ? `<span class="type-badge ${typeClass}">${item.type}</span>` : ''}
+          ${item.status ? `<span class="status-badge ${item.status}">${item.status}</span>` : ''}
+        </div>
+      </div>
+      <h3 class="card-title">${item.title}</h3>
+      <span class="liver-name" onclick="selectLiver('${item.liver}')">${item.liver}</span>
+      <div class="sweetness">
+        <span class="sweetness-label">糖度：</span>
+        <span class="sweetness-stars">${stars}</span>
+      </div>
+      <div class="tags">${tagsHtml}</div>
+    </div>
+    <div class="card-buttons">
+      <a href="${item.reviewUrl || '#'}" class="${reviewBtnClass}" ${reviewTarget}>感想を読む</a>
+      <a href="${item.buyUrl || '#'}" class="${buyBtnClass}" ${buyTarget}>購入ページへ</a>
+    </div>
+  `;
+  return card;
+}
+
+// ==========================================
+// 各種アクション処理
+// ==========================================
+function toggleBookmark(id) {
+  let bookmarks = JSON.parse(localStorage.getItem('voice_bookmarks') || '[]');
+  if (bookmarks.includes(id)) {
+    bookmarks = bookmarks.filter(bId => bId !== id);
+  } else {
+    bookmarks.push(id);
+  }
+  localStorage.setItem('voice_bookmarks', JSON.stringify(bookmarks));
+  renderCards();
+}
+
+function toggleBookmarkFilter() {
+  isBookmarkOnly = !isBookmarkOnly;
+  const btn = document.getElementById('btn-toggle-bookmark');
+  if (btn) {
+    if (isBookmarkOnly) {
+      btn.classList.add('active');
+      btn.textContent = '★ ブックマークのみ表示中';
+    } else {
+      btn.classList.remove('active');
+      btn.textContent = '☆ ブックマークのみ表示';
+    }
+  }
+  renderCards();
+}
+
+function selectLiver(liverName) {
+  const selectLiver = document.getElementById('select-liver');
+  if (selectLiver) {
+    selectLiver.value = liverName;
+    renderCards();
+  }
+}
+
+function selectTag(tagName) {
+  const selectTag = document.getElementById('select-tag');
+  if (selectTag) {
+    selectTag.value = tagName;
+    renderCards();
+  }
+}
+
+function clearTagFilter() {
+  const selectTag = document.getElementById('select-tag');
+  if (selectTag) {
+    selectTag.value = '';
+    renderCards();
+  }
+}
+
+function resetFilters() {
+  document.getElementById('search-liver').value = '';
+  document.getElementById('select-liver').value = '';
+  document.getElementById('select-tag').value = '';
+  document.getElementById('filter-status').value = 'all';
+  document.getElementById('filter-type').value = 'all';
+  document.getElementById('sort-order').value = 'shuffle';
+
+  isBookmarkOnly = false;
+  const btnBookmark = document.getElementById('btn-toggle-bookmark');
+  if (btnBookmark) {
+    btnBookmark.classList.remove('active');
+    btnBookmark.textContent = '☆ ブックマークのみ表示';
+  }
+
+  renderCards();
 }

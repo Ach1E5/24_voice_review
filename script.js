@@ -28,6 +28,7 @@ function init() {
   populateLiverDropdown();
   initFilters();
   initScrollTop();
+  initToggleFilter();
   filterData();
 }
 
@@ -414,3 +415,15 @@ function renderCards(data) {
 
 // ページ読み込み時に実行
 document.addEventListener('DOMContentLoaded', init);
+
+// フィルター開閉用の関数
+function initToggleFilter() {
+  const toggleBtn = document.getElementById('toggle-filter-btn');
+  const filterContainer = document.getElementById('filter-container');
+
+  if (toggleBtn && filterContainer) {
+    toggleBtn.addEventListener('click', () => {
+      filterContainer.classList.toggle('is-open');
+    });
+  }
+}

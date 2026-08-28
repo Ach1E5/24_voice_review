@@ -205,6 +205,13 @@ function filterByLiver(liverName) {
   filterData();
 }
 
+// カード内のボイス種別をクリックした時の処理
+function filterByType(typeName) {
+  const filterType = document.getElementById('filter-type');
+  if (filterType) filterType.value = typeName;
+  filterData();
+}
+
 // 選択中タグを解除する関数
 function clearTagFilter() {
   currentSelectedTag = '';
@@ -364,7 +371,7 @@ function renderCards(data) {
       <div>
         <div class="card-header">
           <div class="card-header-top">
-            <span class="type-badge ${typeClass}">${item.type || ''}</span>
+            <span class="type-badge ${typeClass}" onclick="filterByType('${item.type}')">${item.type || ''}</span>
             <span class="status-badge ${item.status}">${item.status}</span>
           </div>
           ${exBadgeHtml ? `<div class="card-header-bottom">${exBadgeHtml}</div>` : ''}

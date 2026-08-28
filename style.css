@@ -48,7 +48,7 @@ header h1 {
 .filter-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 6px;
 }
 
 .filter-group {

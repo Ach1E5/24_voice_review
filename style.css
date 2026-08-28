@@ -517,4 +517,58 @@ input[type="search"]::-webkit-search-cancel-button {
   .filter-container.hidden-mobile {
     display: none; /* スマホの時だけ初期状態を閉じておく */
   }
+  /* カードの余白を少し詰めて画面を有効活用 */
+  .card {
+    padding: 12px;
+  }
+
+  /* タグやバッジの文字サイズ・余白を調整 */
+  .tag, .type-badge, .status-badge {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  /* タップエリアを大きく（指で押しやすくする） */
+  .review-btn, .bookmark-btn, .type-badge {
+    min-height: 44px; /* スマホで押しやすい推奨サイズ */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #card-list {
+    grid-template-columns: 1fr; /* スマホは完全1列 */
+    gap: 12px;
+  }
+}
+/* カード一覧の親要素 */
+#card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+/* 絞り込みトグルボタン（サイトのテイストに合わせたデザイン） */
+.toggle-filter-btn {
+  width: 100%;
+  max-width: 400px;
+  display: block;
+  margin: 0 auto 16px auto;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #ff4d6d;
+  border: 2px solid #ffb3c1;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(255, 77, 109, 0.08);
+}
+
+.toggle-filter-btn:hover,
+.toggle-filter-btn:active {
+  background-color: #fff0f3;
+  border-color: #ff4d6d;
+  transform: translateY(-1px);
 }
